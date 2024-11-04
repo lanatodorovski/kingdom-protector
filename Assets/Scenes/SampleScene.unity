@@ -648,7 +648,7 @@ GameObject:
   m_Component:
   - component: {fileID: 449423170}
   m_Layer: 3
-  m_Name: SpawPoints
+  m_Name: SpawnPoints
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1497,6 +1497,11 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &909087800 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5007123251914187435, guid: 9b61adc15c90e7d48a43f12cf43e33e0, type: 3}
+  m_PrefabInstance: {fileID: 499451245}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &933476405
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -56132,6 +56137,7 @@ MonoBehaviour:
   - {fileID: 568745331}
   - {fileID: 1848710117}
   - {fileID: 1738586078}
+  - {fileID: 909087800}
   waveSO:
   - {fileID: 11400000, guid: 35020240eb422eb48b9853ffd24d1ca7, type: 2}
   spawnPoints:
