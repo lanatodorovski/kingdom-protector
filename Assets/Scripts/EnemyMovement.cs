@@ -15,14 +15,14 @@ public class EnemyMovement : MonoBehaviour
 
     private EnemyPathScript path;
     private CharacterAnimationHandler animationHandler;
-    private int nthPathPoint = 0;
+    [SerializeField]private int nthPathPoint = 0;
     Vector3 pointPosition;
+
     void Awake()
     {
         rb = gameObject.GetComponent<Rigidbody2D>();
         attackArea = gameObject.GetComponentInChildren<AttackArea>();
         animationHandler = gameObject.GetComponent<CharacterAnimationHandler>();
-        path = FindAnyObjectByType<EnemyPathScript>();
     }
     private void Update()
     {
@@ -30,15 +30,15 @@ public class EnemyMovement : MonoBehaviour
     }
     private void Move()
     {
-        if (nthPathPoint > path.GetPathPointCount())
-        {
-            Destroy(gameObject);
-            return;
-        }
         if (Mathf.Sign(pointPosition.x - transform.position.x) != Mathf.Sign( movementDirection.x)
             && Mathf.Sign(pointPosition.y - transform.position.y) != Mathf.Sign(movementDirection.y) 
             || nthPathPoint == 0)
         {
+            if (nthPathPoint == path.GetPathPointCount())
+            {
+                Destroy(gameObject);
+                return;
+            }
             if(nthPathPoint == 0 || nthPathPoint ==  path.GetPathPointCount() - 1)
             {
                 pointPosition = path.GetPathPointAt(nthPathPoint).transform.position;
@@ -62,5 +62,9 @@ public class EnemyMovement : MonoBehaviour
     {
         animationHandler.FlipGOHandler(movementDirection, true);
         attackArea.RotateDirection((int)Mathf.Round(movementDirection.y));
+    }
+    public void SetPath(EnemyPathScript path)
+    {
+        this.path = path;
     }
 }

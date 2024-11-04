@@ -5,10 +5,10 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "WaveSO", fileName ="New Wawe SO")]
 public class WaveConfig : ScriptableObject
 {
-    [SerializeField] private GameObject[] enemies = new GameObject[0];
+    [SerializeField] private List<GameObject> enemies;
     public int GetEnemiesLength()
     {
-        return enemies.Length;
+        return enemies.Count;
     }
     public GameObject GetEnemyAt(int index)
     {

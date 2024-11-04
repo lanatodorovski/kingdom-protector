@@ -208,6 +208,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 2
+  nthPathPoint: 0
 --- !u!4 &297250032313146863 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1091372976321505083, guid: ef01300a1d9d5644db545f2de0108ca4, type: 3}
