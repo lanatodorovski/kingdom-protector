@@ -15,10 +15,10 @@ public class TowerUpgradeControl : MonoBehaviour, IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         Debug.Log("aa");
-        SetUpdade();
+        SetUpdate();
     }
 
-    private void SetUpdade()
+    private void SetUpdate()
     {
         GameObject upgradedTower = Instantiate(towerUpgradesDictionary.findTowerByType(TowerType.Basic));
         upgradedTower.transform.parent = gameObject.transform.parent;

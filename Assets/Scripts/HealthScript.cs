@@ -38,7 +38,7 @@ public class HealthScript : MonoBehaviour
         if (isAlive)
         {
             currentHealth -= damadge;
-            Debug.Log(currentHealth);
+            //Debug.Log(currentHealth);
 
             if(slider != null)slider.value = currentHealth;
 
@@ -65,5 +65,9 @@ public class HealthScript : MonoBehaviour
     {
         animationHandler.AnimateDamadged();
         yield return new WaitForSecondsRealtime(damadgeReceiveDuration);
+    }
+    public bool GetIsAlive()
+    {
+        return isAlive;
     }
 }

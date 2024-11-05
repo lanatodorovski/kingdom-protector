@@ -18,15 +18,18 @@ public class EnemyMovement : MonoBehaviour
     [SerializeField]private int nthPathPoint = 0;
     Vector3 pointPosition;
 
+    HealthScript healthScript;
     void Awake()
     {
         rb = gameObject.GetComponent<Rigidbody2D>();
         attackArea = gameObject.GetComponentInChildren<AttackArea>();
         animationHandler = gameObject.GetComponent<CharacterAnimationHandler>();
+        healthScript = gameObject.GetComponent<HealthScript>();
     }
     private void Update()
     {
-            Move();
+        Move();
+        if (healthScript != null && !healthScript.GetIsAlive()) StopMove();
     }
     private void Move()
     {
@@ -52,12 +55,14 @@ public class EnemyMovement : MonoBehaviour
             rb.velocity = movementDirection * movementSpeed;
 
             animationHandler.AnimateMovement(movementDirection);
-
             Flip();
 
         }
     }
-
+    private void StopMove()
+    {
+        rb.velocity = Vector3.zero;
+    }
     private void Flip()
     {
         animationHandler.FlipGOHandler(movementDirection, true);

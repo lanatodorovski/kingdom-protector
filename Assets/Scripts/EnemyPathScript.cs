@@ -64,10 +64,7 @@ public class EnemyPathScript : MonoBehaviour
         if(switchToPath != null && nextPoint != null)
         {
             List<GameObject> addedPoints = switchToPath.GetPointRangeFromPoint(nextPoint);
-            foreach (GameObject point in addedPoints)
-            {
-                pathPoints.Add(point);
-            }
+            pathPoints.AddRange(addedPoints);
             Debug.Log(GetPathPointCount());
         }
     }

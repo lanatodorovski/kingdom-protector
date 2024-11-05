@@ -6,7 +6,7 @@ public class TowerAttack : MonoBehaviour
 {
     [SerializeField] private GameObject projectileObject;
     [SerializeField] private float projectileCooldown = 1f;
-    
+    [SerializeField] private GameObject shootPoint;
     private TargetEnemy targetEnemy;
     private float cooldownTimer = 0f;
 
@@ -20,7 +20,7 @@ public class TowerAttack : MonoBehaviour
         if (targetEnemy.targetedGameobject != null
             && cooldownTimer > projectileCooldown)
         {
-            GameObject newProjectile = Instantiate(projectileObject, gameObject.transform.position, Quaternion.identity);
+            GameObject newProjectile = Instantiate(projectileObject, shootPoint.transform.position, Quaternion.identity);
             newProjectile.GetComponent<ProjectileScript>().SetTarget(targetEnemy.targetedGameobject);
             cooldownTimer = 0f;
         }

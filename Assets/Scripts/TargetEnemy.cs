@@ -10,7 +10,8 @@ public class TargetEnemy : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.layer == LayerMask.NameToLayer("Enemies"))
+        if (collision.gameObject.layer == LayerMask.NameToLayer("Enemies") 
+            && !collision.gameObject.GetComponent<DetectArea>())
         {
             objectsInRange.Add(collision.gameObject);
             if (targetedGameobject == null)
@@ -26,7 +27,7 @@ public class TargetEnemy : MonoBehaviour
         if (collision.gameObject.layer == LayerMask.NameToLayer("Enemies"))
         {
             objectsInRange.Remove(collision.gameObject);
-            if (collision.gameObject == targetedGameobject)
+            if (collision.gameObject == targetedGameobject && objectsInRange.Count > 0)
             {
                 targetedGameobject = objectsInRange[0];
                 //Debug.Log("Enemy has left the teritory");
