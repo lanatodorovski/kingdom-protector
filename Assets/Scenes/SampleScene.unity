@@ -858,7 +858,7 @@ MonoBehaviour:
   m_AssetsPPU: 16
   m_RefResolutionX: 848
   m_RefResolutionY: 484
-  m_UpscaleRT: 0
+  m_UpscaleRT: 1
   m_PixelSnapping: 1
   m_CropFrameX: 1
   m_CropFrameY: 1
@@ -2185,7 +2185,7 @@ MonoBehaviour:
   timeToAttack: 0.5
 --- !u!95 &1207414917
 Animator:
-  serializedVersion: 4
+  serializedVersion: 5
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -2202,7 +2202,8 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!70 &1207414918
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -2312,7 +2313,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 0
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0.51388896, y: 1.088889, z: 0}
   m_MaxChunkCount: 16
