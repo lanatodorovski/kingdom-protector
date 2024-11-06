@@ -9,13 +9,13 @@ public class EnemyPathScript : MonoBehaviour
     [SerializeField]
     GameObject[] spawnPoints = new GameObject[0];
     [SerializeField] float enemySpawnDelay = 1.0f;
+    [SerializeField] float radius;
 
     [Header("Next Path")]
-    [SerializeField] private EnemyPathScript switchToPath = null;
     [SerializeField] private GameObject nextPoint = null;
+    private EnemyPathScript switchToPath = null;
 
     private WaveConfig currentWave;
-    private List<GameObject> AdditionalPathPoints;
     // Start is called before the first frame update
     void Start()
     {
@@ -37,7 +37,7 @@ public class EnemyPathScript : MonoBehaviour
     {
         return pathPoints[index];
     }
-    public Vector2 GetRandomPositionFromPoint(int index, float radius = 1)
+    public Vector2 GetRandomPositionFromPoint(int index)
     {
         return pathPoints[index].transform.position + (Vector3) Random.insideUnitCircle * radius;
     }
@@ -61,11 +61,12 @@ public class EnemyPathScript : MonoBehaviour
     }
     private void AddAdditionalPoints()
     {
-        if(switchToPath != null && nextPoint != null)
+        if(nextPoint != null)
         {
+            switchToPath = nextPoint.transform.parent.GetComponent<EnemyPathScript>();
             List<GameObject> addedPoints = switchToPath.GetPointRangeFromPoint(nextPoint);
             pathPoints.AddRange(addedPoints);
-            Debug.Log(GetPathPointCount());
+            //Debug.Log(GetPathPointCount());
         }
     }
 }

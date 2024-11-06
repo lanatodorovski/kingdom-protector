@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Weapons
+  - IgnoreMouse
   layers:
   - Default
   - TransparentFX
@@ -53,4 +54,7 @@ TagManager:
     locked: 0
   - name: player
     uniqueID: 3702925797
+    locked: 0
+  - name: UI
+    uniqueID: 2550600989
     locked: 0

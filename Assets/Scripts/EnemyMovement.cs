@@ -15,6 +15,7 @@ public class EnemyMovement : MonoBehaviour
 
     private EnemyPathScript path;
     private CharacterAnimationHandler animationHandler;
+    [Header("Read Only")]
     [SerializeField]private int nthPathPoint = 0;
     Vector3 pointPosition;
 
@@ -48,7 +49,7 @@ public class EnemyMovement : MonoBehaviour
             }
             else
             {
-                pointPosition = path.GetRandomPositionFromPoint(nthPathPoint, 1.5f);
+                pointPosition = path.GetRandomPositionFromPoint(nthPathPoint);
             }
             movementDirection = (pointPosition - transform.position).normalized;
             nthPathPoint++;

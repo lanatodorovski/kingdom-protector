@@ -1,26 +1,34 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
-public class TowerUpgradeControl : MonoBehaviour, IPointerClickHandler
+public class TowerUpgradeControl : MonoBehaviour
 {
 
     [SerializeField] TowerType towerType = TowerType.Plain;
-
+    [SerializeField]GameObject canvasGameObject;
+    [SerializeField] bool deactivateOnStart = true;
     TowerUpgradesDictionary towerUpgradesDictionary;
     private void Awake()
     {
-        towerUpgradesDictionary = GameObject.FindObjectOfType<TowerUpgrades>().towerUpgradesDictionary;
+        towerUpgradesDictionary = GameObject.FindObjectOfType<TowerUpgrades>().towerUpgradesDictionary;     
     }
-    public void OnPointerClick(PointerEventData eventData)
+    private void Start()
     {
-        Debug.Log("aa");
-        SetUpdate();
+        if(deactivateOnStart) canvasGameObject.SetActive(false);
     }
+    public void ActivateUI()
+    {
+        canvasGameObject.SetActive(true);
+    }
+    
+    public void SetUpgrade(TowerUpgradeButton button)
+    {
+        TowerType upgrade = button.towerUpgrade;
 
-    private void SetUpdate()
-    {
-        GameObject upgradedTower = Instantiate(towerUpgradesDictionary.findTowerByType(TowerType.Basic));
+        GameObject upgradedTower = Instantiate(towerUpgradesDictionary.findTowerByType(upgrade));
         upgradedTower.transform.parent = gameObject.transform.parent;
         upgradedTower.transform.localPosition = gameObject.transform.localPosition;
         upgradedTower.transform.localRotation = gameObject.transform.localRotation;
