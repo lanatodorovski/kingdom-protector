@@ -137,7 +137,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5309120306003691920, guid: 93105182e4d3e4343b570e9b254216ad, type: 3}
       propertyPath: m_RootOrder
-      value: 14
+      value: 13
       objectReference: {fileID: 0}
     - target: {fileID: 5309120306003691920, guid: 93105182e4d3e4343b570e9b254216ad, type: 3}
       propertyPath: m_LocalPosition.x
@@ -590,7 +590,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5309120306003691920, guid: 93105182e4d3e4343b570e9b254216ad, type: 3}
       propertyPath: m_RootOrder
-      value: 15
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 5309120306003691920, guid: 93105182e4d3e4343b570e9b254216ad, type: 3}
       propertyPath: m_LocalPosition.x
@@ -812,7 +812,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 10.419451
+  orthographic size: 14
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -856,13 +856,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_AssetsPPU: 16
-  m_RefResolutionX: 576
-  m_RefResolutionY: 317
+  m_RefResolutionX: 848
+  m_RefResolutionY: 484
   m_UpscaleRT: 0
   m_PixelSnapping: 1
-  m_CropFrameX: 0
-  m_CropFrameY: 0
-  m_StretchFill: 0
+  m_CropFrameX: 1
+  m_CropFrameY: 1
+  m_StretchFill: 1
 --- !u!114 &519420034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1108,7 +1108,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5309120306003691920, guid: 93105182e4d3e4343b570e9b254216ad, type: 3}
       propertyPath: m_RootOrder
-      value: 16
+      value: 15
       objectReference: {fileID: 0}
     - target: {fileID: 5309120306003691920, guid: 93105182e4d3e4343b570e9b254216ad, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1511,7 +1511,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5309120306003691920, guid: 93105182e4d3e4343b570e9b254216ad, type: 3}
       propertyPath: m_RootOrder
-      value: 11
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5309120306003691920, guid: 93105182e4d3e4343b570e9b254216ad, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1568,7 +1568,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5309120306003691920, guid: 93105182e4d3e4343b570e9b254216ad, type: 3}
       propertyPath: m_RootOrder
-      value: 13
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 5309120306003691920, guid: 93105182e4d3e4343b570e9b254216ad, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1890,7 +1890,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5309120306003691920, guid: 93105182e4d3e4343b570e9b254216ad, type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 5309120306003691920, guid: 93105182e4d3e4343b570e9b254216ad, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2185,7 +2185,7 @@ MonoBehaviour:
   timeToAttack: 0.5
 --- !u!95 &1207414917
 Animator:
-  serializedVersion: 5
+  serializedVersion: 4
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -2202,8 +2202,7 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!70 &1207414918
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
@@ -20849,7 +20848,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 5309120306003691920, guid: 93105182e4d3e4343b570e9b254216ad, type: 3}
       propertyPath: m_RootOrder
-      value: 12
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 5309120306003691920, guid: 93105182e4d3e4343b570e9b254216ad, type: 3}
       propertyPath: m_LocalPosition.x
