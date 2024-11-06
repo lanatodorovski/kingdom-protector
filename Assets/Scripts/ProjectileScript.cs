@@ -25,7 +25,7 @@ public class ProjectileScript : MonoBehaviour
     {
         Vector2 direction = targetObject.transform.position - gameObject.transform.position;
         float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg - 90;
-        Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.fwd);
+        Quaternion rotation = Quaternion.AngleAxis(angle, Vector3.forward);
         transform.rotation= rotation;
     }
     public void SetTarget(GameObject target)

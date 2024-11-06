@@ -10,7 +10,7 @@ public class TowerUpgradeControl : MonoBehaviour, IPointerClickHandler
     TowerUpgradesDictionary towerUpgradesDictionary;
     private void Awake()
     {
-        towerUpgradesDictionary = FindAnyObjectByType<TowerUpgrades>().towerUpgradesDictionary;
+        towerUpgradesDictionary = GameObject.FindObjectOfType<TowerUpgrades>().towerUpgradesDictionary;
     }
     public void OnPointerClick(PointerEventData eventData)
     {
