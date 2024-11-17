@@ -57,14 +57,14 @@ public enum GameState
 [Serializable]
 public class BuildMaterialItem
 {
-    [SerializeField]private BuildMaterial material;
-    [SerializeField]private int count;
-    [SerializeField]private Sprite sprite;
-    [SerializeField]private TextMeshProUGUI materialCountUI;
+    [SerializeField] private BuildMaterial material;
+    [SerializeField] private int count;
+    [SerializeField] private Sprite sprite;
+    [SerializeField] private TextMeshProUGUI materialCountUI;
 
     public void SetCountUI()
     {
-        this.materialCountUI.text = this.count.ToString();  
+        this.materialCountUI.text = this.count.ToString();
     }
     public BuildMaterial GetBuildMaterial()
     {
@@ -73,6 +73,10 @@ public class BuildMaterialItem
     public int GetCount()
     {
         return count;
+    }
+    public Sprite GetSprite()
+    {
+        return sprite;
     }
     public void CostTakeAway(int cost)
     {
