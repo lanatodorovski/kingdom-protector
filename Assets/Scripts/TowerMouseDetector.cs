@@ -8,7 +8,7 @@ public class TowerMouseDetector : MonoBehaviour
     TowerUpgradeControl control;
     private void OnMouseDown()
     {
-        
+
         control = gameObject.transform.parent.GetComponent<TowerUpgradeControl>();
 
         if (control == null)
@@ -16,7 +16,8 @@ public class TowerMouseDetector : MonoBehaviour
             control = gameObject.GetComponent<TowerUpgradeControl>();
         }
 
-        control.ActivateUI();
-        
+        control.ToggleUI(true);
+
     }
+
 }

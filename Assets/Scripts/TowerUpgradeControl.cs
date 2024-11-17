@@ -4,31 +4,39 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 public class TowerUpgradeControl : MonoBehaviour
 {
 
     [SerializeField] TowerType towerType = TowerType.Plain;
     [SerializeField]GameObject canvasGameObject;
     [SerializeField] bool deactivateOnStart = true;
-    TowerUpgradesDictionary towerUpgradesDictionary;
+
+    GameManager gameManager;
+    TowerUpgrades towerUpgrades;
     private void Awake()
     {
-        towerUpgradesDictionary = GameObject.FindObjectOfType<TowerUpgrades>().towerUpgradesDictionary;     
+        gameManager = GetComponent<GameManager>();
+        towerUpgrades = GameObject.FindObjectOfType<TowerUpgrades>();     
     }
     private void Start()
     {
         if(deactivateOnStart) canvasGameObject.SetActive(false);
     }
-    public void ActivateUI()
+    public void ToggleUI(bool toggle)
     {
-        canvasGameObject.SetActive(true);
+        canvasGameObject.SetActive(toggle);
     }
     
     public void SetUpgrade(TowerUpgradeButton button)
     {
         TowerType upgrade = button.towerUpgrade;
 
-        GameObject upgradedTower = Instantiate(towerUpgradesDictionary.findTowerByType(upgrade));
+        bool canBuy = towerUpgrades.CanBuyUpgrade(upgrade);
+        if (canBuy == false) return;
+        towerUpgrades.BuyUpgrade(upgrade);
+
+        GameObject upgradedTower = Instantiate(towerUpgrades.FindTowerByType(upgrade).GetTowerGameObject());
         upgradedTower.transform.parent = gameObject.transform.parent;
         upgradedTower.transform.localPosition = gameObject.transform.localPosition;
         upgradedTower.transform.localRotation = gameObject.transform.localRotation;
@@ -36,4 +44,6 @@ public class TowerUpgradeControl : MonoBehaviour
         upgradedTower.transform.SetSiblingIndex(gameObject.transform.GetSiblingIndex());
         Destroy(gameObject);
     }
+
+
 }
