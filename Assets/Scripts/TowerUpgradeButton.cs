@@ -9,16 +9,16 @@ public class TowerUpgradeButton : MonoBehaviour
 
     [Header("Material UI")]
     [SerializeField] private string neededMaterialsDisplayName;
-    [SerializeField] private GameObject materialCountGO;
+    [SerializeField] private GameObject materialCountPrefab;
 
     private GameObject neededMaterialsDisplay;
-    TowerUpgrades towerUpgrades;
-    private GameManager gameManager;
+    TowerUpgradeCollection towerUpgrades;
+    private BuildMaterialCollection buildMaterialCollection;
 
     private void Awake()
     {
-        gameManager = FindAnyObjectByType<GameManager>();
-        towerUpgrades = FindAnyObjectByType<TowerUpgrades>();
+        buildMaterialCollection = FindAnyObjectByType<BuildMaterialCollection>();
+        towerUpgrades = FindAnyObjectByType<TowerUpgradeCollection>();
     }
     private void Start()
     {
@@ -37,11 +37,11 @@ public class TowerUpgradeButton : MonoBehaviour
         MaterialCost[] materialCost = towerUpgrades.FindTowerByType(towerUpgrade).GetMaterialCosts();
         foreach(MaterialCost material in materialCost) {
             BuildMaterial buildMaterial = material.GetBuildMaterial();
-            BuildMaterialItem buildMaterialItem = gameManager.GetMaterial(buildMaterial);
+            BuildMaterialSO buildMaterialSO = buildMaterialCollection.GetMaterial(buildMaterial);
 
-            GameObject materialCountInstance = Instantiate(materialCountGO, neededMaterialsDisplay.transform);
-            MaterialCountUI materialCountUI = materialCountGO.GetComponent<MaterialCountUI>();
-            materialCountUI.SetMaterialUI(buildMaterialItem.GetSprite(), material.GetCost());
+            GameObject materialCountInstance = Instantiate(materialCountPrefab, neededMaterialsDisplay.transform);
+            MaterialCountUI materialCountUI = materialCountInstance.GetComponent<MaterialCountUI>();
+            materialCountUI.SetBuildMaterial(buildMaterialSO.GetSprite(), material.GetCost());
             
 
         }

@@ -12,13 +12,13 @@ public class TowerUpgradeControl : MonoBehaviour
     [SerializeField] GameObject canvasGameObject;
     [SerializeField] bool deactivateOnStart = true;
 
-    GameManager gameManager;
-    TowerUpgrades towerUpgrades;
+    BuildMaterialCollection buildMaterialCollection;
+    TowerUpgradeCollection towerUpgrades;
     
     private void Awake()
     {
-        gameManager = GetComponent<GameManager>();
-        towerUpgrades = GameObject.FindObjectOfType<TowerUpgrades>();     
+        buildMaterialCollection = GetComponent<BuildMaterialCollection>();
+        towerUpgrades = GameObject.FindObjectOfType<TowerUpgradeCollection>();     
     }
     private void Start()
     {

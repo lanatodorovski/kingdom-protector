@@ -7,11 +7,14 @@ using UnityEngine.UI;
 
 public class MaterialCountUI : MonoBehaviour
 {
+    [SerializeField] private BuildMaterialSO buildMaterialSO;
+
     private Image materialImage;
     private TextMeshProUGUI textView;
 
-    public void SetMaterialUI(Sprite materialSprite, int count)
+    private void Awake()
     {
+        textView = GetComponentInChildren<TextMeshProUGUI>();
         Image[] images = GetComponentsInChildren<Image>();
         foreach (Image image in images)
         {
@@ -21,6 +24,21 @@ public class MaterialCountUI : MonoBehaviour
                 return;
             }
         }
+    }
+    private void Start()
+    {
+        if(buildMaterialSO != null)
+        {
+            SetBuildMaterial(buildMaterialSO);
+        }
+    }
+
+    public void SetBuildMaterial(BuildMaterialSO material)
+    {
+        SetBuildMaterial(material.GetSprite(), material.GetCount());
+    }
+    public void SetBuildMaterial(Sprite materialSprite, int count = 0)
+    {
         materialImage.sprite = materialSprite;
         Debug.Log(count);
         SetCountUI(count);
@@ -28,7 +46,6 @@ public class MaterialCountUI : MonoBehaviour
 
     public void SetCountUI(int count)
     {
-        textView = GetComponentInChildren<TextMeshProUGUI>();
         textView.text = count.ToString();
     }
 }
