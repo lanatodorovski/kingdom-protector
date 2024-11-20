@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -17,11 +18,17 @@ public class MaterialCountUI : MonoBehaviour
             if (image.gameObject != gameObject)
             {
                 materialImage = image;
+                return;
             }
         }
-        textView = GetComponentInChildren<TextMeshProUGUI>();
-     
         materialImage.sprite = materialSprite;
+        Debug.Log(count);
+        SetCountUI(count);
+    }
+
+    public void SetCountUI(int count)
+    {
+        textView = GetComponentInChildren<TextMeshProUGUI>();
         textView.text = count.ToString();
     }
 }

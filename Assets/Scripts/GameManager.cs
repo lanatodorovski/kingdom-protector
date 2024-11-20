@@ -26,7 +26,9 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < materialItems.Length; i++)//BuildMaterial material in materials
         {
             BuildMaterialItem material = materialItems[i];
-            material.SetCountUI();
+
+            MaterialCountUI materialCountUI = material.GetMaterialCountUI();                
+            materialCountUI.SetMaterialUI(material.GetSprite(), material.GetCount());
         }
     }
     public BuildMaterialItem GetMaterial(BuildMaterial material)
@@ -60,11 +62,12 @@ public class BuildMaterialItem
     [SerializeField] private BuildMaterial material;
     [SerializeField] private int count;
     [SerializeField] private Sprite sprite;
-    [SerializeField] private TextMeshProUGUI materialCountUI;
+    [SerializeField] private MaterialCountUI materialCountUI;
 
-    public void SetCountUI()
+    public MaterialCountUI GetMaterialCountUI()
     {
-        this.materialCountUI.text = this.count.ToString();
+        Debug.Log(count);
+        return this.materialCountUI;
     }
     public BuildMaterial GetBuildMaterial()
     {
@@ -80,9 +83,8 @@ public class BuildMaterialItem
     }
     public void CostTakeAway(int cost)
     {
-        count -= cost;
-        Debug.Log(count);
-        this.SetCountUI();
+        count -= cost;        
+        this.materialCountUI.SetCountUI(count);
     }
 }
 

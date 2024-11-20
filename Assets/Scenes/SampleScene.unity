@@ -1818,17 +1818,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 5007123251914187435, guid: 9b61adc15c90e7d48a43f12cf43e33e0, type: 3}
   m_PrefabInstance: {fileID: 499451245}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &916613776 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3353365248987417070, guid: 893a0d731fdffc04dbc91bceb6e29593, type: 3}
-  m_PrefabInstance: {fileID: 3353365249232905086}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &933476405
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1886,6 +1875,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 93105182e4d3e4343b570e9b254216ad, type: 3}
+--- !u!114 &955822031 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5748618639232460143, guid: 893a0d731fdffc04dbc91bceb6e29593, type: 3}
+  m_PrefabInstance: {fileID: 3353365249232905086}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c3fe627b315829449602becd9d7b1f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &962711706
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2174,7 +2174,7 @@ MonoBehaviour:
   - material: 0
     count: 22
     sprite: {fileID: 2114668277, guid: c6e11e71264d35447b67fe4fd826e835, type: 3}
-    materialCountUI: {fileID: 916613776}
+    materialCountUI: {fileID: 955822031}
 --- !u!1001 &1051036514
 PrefabInstance:
   m_ObjectHideFlags: 0

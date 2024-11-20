@@ -9,11 +9,12 @@ public class TowerUpgradeControl : MonoBehaviour
 {
 
     [SerializeField] TowerType towerType = TowerType.Plain;
-    [SerializeField]GameObject canvasGameObject;
+    [SerializeField] GameObject canvasGameObject;
     [SerializeField] bool deactivateOnStart = true;
 
     GameManager gameManager;
     TowerUpgrades towerUpgrades;
+    
     private void Awake()
     {
         gameManager = GetComponent<GameManager>();
@@ -33,7 +34,11 @@ public class TowerUpgradeControl : MonoBehaviour
         TowerType upgrade = button.towerUpgrade;
 
         bool canBuy = towerUpgrades.CanBuyUpgrade(upgrade);
-        if (canBuy == false) return;
+        if (canBuy == false)
+        {
+            //FailUpdate();
+            return;
+        }
         towerUpgrades.BuyUpgrade(upgrade);
 
         GameObject upgradedTower = Instantiate(towerUpgrades.FindTowerByType(upgrade).GetTowerGameObject());
@@ -45,5 +50,9 @@ public class TowerUpgradeControl : MonoBehaviour
         Destroy(gameObject);
     }
 
+    //private void FailUpdate()
+    //{
+
+    //}
 
 }
