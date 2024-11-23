@@ -9,7 +9,7 @@ public class TowerUpgradeControl : MonoBehaviour
 {
 
     [SerializeField] TowerType towerType = TowerType.Plain;
-    [SerializeField] GameObject canvasGameObject;
+    [SerializeField] GameObject[] UIGameObjects;
     [SerializeField] bool deactivateOnStart = true;
 
     BuildMaterialCollection buildMaterialCollection;
@@ -22,11 +22,15 @@ public class TowerUpgradeControl : MonoBehaviour
     }
     private void Start()
     {
-        if(deactivateOnStart) canvasGameObject.SetActive(false);
+        if (deactivateOnStart) ToggleUI(false);
+  
     }
     public void ToggleUI(bool toggle)
     {
-        canvasGameObject.SetActive(toggle);
+        foreach (GameObject go in UIGameObjects)
+        {
+            go.SetActive(toggle);
+        }
     }
     
     public void SetUpgrade(TowerUpgradeButton button)

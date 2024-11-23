@@ -208,6 +208,7 @@ MonoBehaviour:
   towerUpgrade: 1
   neededMaterialsDisplayName: Needed Materials
   materialCountPrefab: {fileID: 7055719270139355965, guid: 0bdd8444170a4e443840e5b3d6bf4794, type: 3}
+  notEnoughMaterialCountPrefab: {fileID: 2484561896323697874, guid: e9cdb620e6829ed498beb51ea8b9f932, type: 3}
 --- !u!1 &6305346804717536029
 GameObject:
   m_ObjectHideFlags: 0

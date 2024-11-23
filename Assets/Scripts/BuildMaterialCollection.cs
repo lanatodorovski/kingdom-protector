@@ -11,22 +11,71 @@ public class BuildMaterialCollection : MonoBehaviour
 {
 
     [SerializeField]
-    BuildMaterialSO[] materialItems;
-    public BuildMaterialSO GetMaterial(BuildMaterial material)
+    MaterialUse[] materialUses;
+
+
+    public void Start()
     {
-        foreach(BuildMaterialSO materialItem in materialItems)
+        MaterialCountUISetup();
+    }
+    public MaterialUse GetMaterialUse(BuildMaterial material)
+    {
+        foreach (MaterialUse materialCount in materialUses)
         {
-            if(materialItem.GetBuildMaterial() == material)
+            if (materialCount.GetBuildMaterialSO().GetBuildMaterial().Equals(material))
             {
-                return materialItem;
+                return materialCount;
             }
         }
         return null;
     }
+    public BuildMaterialSO GetMaterialSO(BuildMaterial material)
+    {
+        MaterialUse materialUse = GetMaterialUse(material);
+        return materialUse.GetBuildMaterialSO();
+    }
     public int GetCountByMaterial(BuildMaterial material)
     {
-        BuildMaterialSO materialItem = GetMaterial(material);
-        return materialItem.GetCount();
+        MaterialUse materialUse = GetMaterialUse(material);
+        return materialUse.GetCount();
+    }
+
+    private void MaterialCountUISetup()
+    {
+        foreach(MaterialUse materialUse in materialUses)
+        {
+            materialUse.GetMaterialCountUI().SetMaterial(materialUse);
+        }
     }
 }
 
+
+[Serializable]
+public class MaterialUse
+{
+    [SerializeField] BuildMaterialSO material;
+    [SerializeField] int count;
+    [SerializeField] MaterialCountUI materialCountUI;
+
+    public BuildMaterialSO GetBuildMaterialSO()
+    {
+        return material;
+    }
+    public int GetCount()
+    {
+        return count;
+    }
+    public MaterialCountUI GetMaterialCountUI()
+    {
+        return materialCountUI;
+    }
+    public void TakeAwayCount(int removeCount)
+    {
+        count -= removeCount;
+        materialCountUI.SetCountUI(count);
+    }
+    public void AddCount(int addCount){ 
+        count += addCount;
+        materialCountUI.SetCountUI(count);
+    }
+}

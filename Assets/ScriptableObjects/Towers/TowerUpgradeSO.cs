@@ -35,7 +35,6 @@ public class MaterialCost
 {
     [SerializeField] BuildMaterial material;
     [SerializeField] int cost;
-
     public BuildMaterial GetBuildMaterial()
     {
         return material;

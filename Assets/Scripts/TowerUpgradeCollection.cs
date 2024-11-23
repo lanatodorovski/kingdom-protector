@@ -47,10 +47,11 @@ public class TowerUpgradeCollection : MonoBehaviour
         TowerUpgradeSO towerUpgrade = FindTowerByType(upgrade);
         foreach (MaterialCost costMaterial in towerUpgrade.GetMaterialCosts())
         {
-            BuildMaterialSO materialCount = buildMaterialCollection.GetMaterial(costMaterial.GetBuildMaterial());
-            materialCount.CostTakeAway(costMaterial.GetCost());
+            MaterialUse materialCount = buildMaterialCollection.GetMaterialUse(costMaterial.GetBuildMaterial());
+            materialCount.TakeAwayCount(costMaterial.GetCost());
         }
     }
+
 }
 
 

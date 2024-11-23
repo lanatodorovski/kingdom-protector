@@ -9,13 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 83a745879841c66459ea2bbdb6c46ccf, type: 3}
-  m_Name: PlainTower
+  m_Script: {fileID: 11500000, guid: f2fb72fdb36872149968b19b0a984ddc, type: 3}
+  m_Name: StoneMaterial
   m_EditorClassIdentifier: 
-  type: 1
-  obj: {fileID: 7369347594127714959, guid: 13e5dcf2be1447d458e50bbfd765ffd8, type: 3}
-  materialCosts:
-  - material: 0
-    cost: 5
-  - material: 1
-    cost: 1
+  material: 1
+  sprite: {fileID: 1232163382, guid: be4e98472c3a8524b8ac78e213a8640e, type: 3}
