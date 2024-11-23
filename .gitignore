@@ -25,6 +25,7 @@
 
 # Visual Studio cache directory
 .vs/
+/Packages/com.merry-yellow.code-assist/
 
 # Gradle cache directory
 .gradle/
