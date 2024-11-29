@@ -60,10 +60,11 @@ public class TowerUpgradeButton : MonoBehaviour
         for (int i = 0; i < children.Length; i++)
         {
             GameObject gameObject = children[i].gameObject;
-            if(gameObject != neededMaterialsDisplay)
+            if (gameObject != neededMaterialsDisplay)
             {
                 Destroy(gameObject);
             }
         }
+
     }
 }
