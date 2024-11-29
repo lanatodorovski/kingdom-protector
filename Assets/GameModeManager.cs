@@ -5,15 +5,15 @@ using UnityEngine;
 public class GameModeManager : MonoBehaviour
 {
     [SerializeField] private bool isScouting;
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private Camera cinemachineBrain;
+
+    private void Update()
     {
-        
+        //ToggleScoutingCamera(isScouting);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void ToggleScoutingCamera(bool isActive)
     {
-        
+        cinemachineBrain.gameObject.SetActive(isScouting);
     }
 }
