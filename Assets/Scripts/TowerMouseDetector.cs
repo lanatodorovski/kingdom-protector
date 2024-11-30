@@ -37,7 +37,7 @@ public class TowerMouseDetector : MonoBehaviour
 
     private void FindControl()
     {
-        Debug.Log("detect click");
+        //Debug.Log("detect click");
         control = gameObject.transform.parent.GetComponent<TowerUpgradeControl>();
 
         if (control == null)

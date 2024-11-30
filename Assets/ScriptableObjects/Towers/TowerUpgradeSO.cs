@@ -30,16 +30,17 @@ public enum TowerType
     Plain,
     Basic
 }
-[Serializable]
+[Serializable] //MaterialCount is used to connect a count or cost with a certain BuildMaterial
 public class MaterialCost
 {
     [SerializeField] BuildMaterial material;
     [SerializeField] int cost;
+
     public BuildMaterial GetBuildMaterial()
     {
         return material;
     }
-    public int GetCost()
+    public int GetCount()
     {
         return cost;
     }

@@ -138,7 +138,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 8167923781401237702}
         m_TargetAssemblyTypeName: TowerUpgradeButton, Assembly-CSharp
-        m_MethodName: RemoveCostMaterilsUI
+        m_MethodName: RemoveCostMaterialsUI
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -183,7 +183,7 @@ MonoBehaviour:
         m_Calls:
         - m_Target: {fileID: 8167923781401237702}
           m_TargetAssemblyTypeName: TowerUpgradeButton, Assembly-CSharp
-          m_MethodName: RemoveCostMaterilsUI
+          m_MethodName: RemoveCostMaterialsUI
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -206,9 +206,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   towerUpgrade: 1
-  neededMaterialsDisplayName: Needed Materials
-  materialCountPrefab: {fileID: 7055719270139355965, guid: 0bdd8444170a4e443840e5b3d6bf4794, type: 3}
-  notEnoughMaterialCountPrefab: {fileID: 2484561896323697874, guid: e9cdb620e6829ed498beb51ea8b9f932, type: 3}
 --- !u!1 &6305346804717536029
 GameObject:
   m_ObjectHideFlags: 0

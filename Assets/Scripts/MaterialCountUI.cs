@@ -30,7 +30,7 @@ public class MaterialCountUI : MonoBehaviour
     public void SetMaterial(Sprite materialSprite, int count = 0)
     {
         materialImage.sprite = materialSprite;
-        Debug.Log(count);
+        //Debug.Log(count);
         SetCountUI(count);
     }
 

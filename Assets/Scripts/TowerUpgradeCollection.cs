@@ -35,7 +35,7 @@ public class TowerUpgradeCollection : MonoBehaviour
         foreach (MaterialCost costMaterial in towerUpgrade.GetMaterialCosts())
         {
             int materialCount = buildMaterialCollection.GetCountByMaterial(costMaterial.GetBuildMaterial());
-            if(materialCount < costMaterial.GetCost())
+            if(materialCount < costMaterial.GetCount())
             {
                 return false;
             }
@@ -48,7 +48,7 @@ public class TowerUpgradeCollection : MonoBehaviour
         foreach (MaterialCost costMaterial in towerUpgrade.GetMaterialCosts())
         {
             MaterialUse materialCount = buildMaterialCollection.GetMaterialUse(costMaterial.GetBuildMaterial());
-            materialCount.TakeAwayCount(costMaterial.GetCost());
+            materialCount.TakeAwayCount(costMaterial.GetCount());
         }
     }
 
