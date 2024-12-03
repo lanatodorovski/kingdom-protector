@@ -102,7 +102,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &5933080327144191681
 RectTransform:
   m_ObjectHideFlags: 0
@@ -143,7 +143,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: -1744366307
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &8567458202704995956
 MonoBehaviour:
@@ -198,7 +198,6 @@ GameObject:
   - component: {fileID: 6993970053448809982}
   - component: {fileID: 343135025584092973}
   - component: {fileID: 5744257341256150755}
-  - component: {fileID: 4185602070598262642}
   m_Layer: 0
   m_Name: Tower_0
   m_TagString: Untagged
@@ -289,19 +288,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 789cc4d76a241df41a8d391bedf7a6ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &4185602070598262642
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7369347594127714959}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Delegates: []
 --- !u!1 &7417592502079395687
 GameObject:
   m_ObjectHideFlags: 0
@@ -393,6 +379,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5933080327144191681}
     m_Modifications:
+    - target: {fileID: 758199815859950942, guid: ab9bd1b13b7f3c84aa407963fc5c2051, type: 3}
+      propertyPath: m_CullTransparentMesh
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4864539981584342454, guid: ab9bd1b13b7f3c84aa407963fc5c2051, type: 3}
       propertyPath: m_Name
       value: Button_Basic

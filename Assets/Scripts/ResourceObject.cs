@@ -11,12 +11,18 @@ public class ResourceObject : MonoBehaviour
     [SerializeField] int minMaterialGain = 0;
     [SerializeField] int maxMaterialGain = 2;
 
+    [Header("Damadge Color")]
+    [SerializeField]private Color damadgeColor;
+    [SerializeField] private float colorDuration;
+
     private int currentHitsToBreak;
     MaterialUse materialUse;
+    SpriteRenderer spriteRenderer;
     private void Awake()
     {
         materialUse = FindAnyObjectByType<BuildMaterialCollection>().GetMaterialUse(buildMaterial);
         currentHitsToBreak = hitsToBreak;
+        spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     [ContextMenu("Hit And Gain")]
@@ -31,8 +37,17 @@ public class ResourceObject : MonoBehaviour
         int materialGain = Random.Range(minMaterialGain, maxMaterialGain + 1);
         Debug.Log($"You gained {materialGain} {buildMaterial}");
 
-        materialUse.AddCount(materialGain);        
+        materialUse.AddCount(materialGain);
+        StartCoroutine(DamadgeColorChange());
+        
+
     }
 
+    IEnumerator DamadgeColorChange()
+    {
+        spriteRenderer.color = damadgeColor;
+        yield return new WaitForSecondsRealtime(colorDuration);
+        spriteRenderer.color = Color.white;
+    }
 
 }

@@ -21,6 +21,7 @@ public class TowerUpgradeButton : MonoBehaviour
 
     public void RemoveCostMaterialsUI()
     {
+        Debug.Log("click");
         neededMaterialsDisplay.RemoveCostMaterialsUI();
     }
 
