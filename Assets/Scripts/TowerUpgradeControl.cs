@@ -19,7 +19,6 @@ public class TowerUpgradeControl : MonoBehaviour
     {
         buildMaterialCollection = GetComponent<BuildMaterialCollection>();
         towerUpgrades = GameObject.FindObjectOfType<TowerUpgradeCollection>();  
-        GetComponentInChildren<Canvas>().worldCamera = Camera.main;
     }
     private void Start()
     {
