@@ -20,9 +20,9 @@ public class ResourceObject : MonoBehaviour
     SpriteRenderer spriteRenderer;
     private void Awake()
     {
-        materialUse = FindAnyObjectByType<BuildMaterialCollection>().GetMaterialUse(buildMaterial);
         currentHitsToBreak = hitsToBreak;
         spriteRenderer = GetComponent<SpriteRenderer>();
+        materialUse = FindAnyObjectByType<BuildMaterialCollection>().GetMaterialUse(buildMaterial);
     }
 
     [ContextMenu("Hit And Gain")]
@@ -37,7 +37,10 @@ public class ResourceObject : MonoBehaviour
         int materialGain = Random.Range(minMaterialGain, maxMaterialGain + 1);
         Debug.Log($"You gained {materialGain} {buildMaterial}");
 
-        materialUse.AddCount(materialGain);
+        if(materialUse != null)
+        {
+            materialUse.AddCount(materialGain);
+        }
         StartCoroutine(DamadgeColorChange());
         
 
