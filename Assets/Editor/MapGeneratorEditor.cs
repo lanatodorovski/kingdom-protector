@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System;
+using System.Linq;
+using Unity.VisualScripting;
 
 [CustomEditor(typeof(MapGenerator))]
 public class MapGeneratorEditor : Editor
@@ -15,6 +17,9 @@ public class MapGeneratorEditor : Editor
         if (GUILayout.Button("Generate"))
         {
             mapGen.GenerateMap();
+
+            MapBoundsControl boundsControl = target.GetComponent<MapBoundsControl>();
+            boundsControl.SetBounds();
 
         }
 

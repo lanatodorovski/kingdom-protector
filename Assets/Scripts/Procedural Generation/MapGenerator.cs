@@ -18,7 +18,9 @@ public class MapGenerator : MonoBehaviour
     public float persistance;
     public float lacunarity;
 
+    [Header("Seed")]
     public int seed;
+    public bool randomiseSeed;
     public Vector2 offset;
 
     public TerrainType[] regions;
@@ -34,10 +36,13 @@ public class MapGenerator : MonoBehaviour
     [Header("Resource Generation")]
     public ResourceInformation[] spawnInfo;
     public float spawnFrequency = 0.4f;
+    public Vector2Int borderResourceSpawnGap;
     public bool canSpawnResources = true;
-    
+
+
     public void GenerateMap()
     {
+        if (randomiseSeed) seed = UnityEngine.Random.RandomRange(-100000, 100000);
         float[,] noiseMap = Noise.GenerateNoiseMap(mapWidth, mapHeight, seed, noiseScale, octaves, persistance, lacunarity, offset) ;
 
 
@@ -100,7 +105,11 @@ public class MapGenerator : MonoBehaviour
                     if (currentHeight <= regions[i].height)
                     {
                         tileMap[y * mapWidth + x] = regions[i].tile;
-                        if (spawnEnvironment)
+
+
+                        bool borderX = borderResourceSpawnGap.x <= x && borderResourceSpawnGap.x <= mapWidth - x;
+                        bool borderY = borderResourceSpawnGap.y <= y && borderResourceSpawnGap.y <= mapHeight - y;
+                        if (spawnEnvironment && borderX && borderY)
                         {
                             GameObject resource = getResource(regions[i].name);
                             if(resource != null)Instantiate(resource, (Vector3)startPosition + new Vector3(x + 0.5f, y + 0.5f, 0), Quaternion.identity, resourceRenderer.transform);                            
@@ -132,47 +141,7 @@ public class MapGenerator : MonoBehaviour
         }
         return null;
     }
-    //public void SpawnResource(TileBase[] tilemap)
-    //{
-        
-    //    for(int y = 0; y < mapHeight; y++)
-    //    {
-    //        for(int x = 0; x < mapWidth; x++)
-    //        {
-    //            float randomValue = UnityEngine.Random.Range(0f, 1f);
-    //            if(randomValue <= spawnFrequency)
-    //            {
-    //                int randomResource = UnityEngine.Random.Range(0, spawnInfo.Length);
-    //                ResourceInformation resInfo = spawnInfo[randomResource];
-    //                string terrainTypeName = null;
 
-    //                bool canSpawn = true;
-    //                for (int j = 0; j < resInfo.collisionSize.y + 2; j++)
-    //                {
-    //                    for(int i = 0; i < resInfo.collisionSize.x + 2; i++)
-    //                    {
-    //                        int checkPositionY = y - 1 + j;
-    //                        int checkPositionX = x - 1 + i;
-    //                        TileBase checkTileBase = tilemap[checkPositionY * mapWidth + checkPositionX];
-
-    //                        if (terrainTypeName == null)
-    //                        {
-    //                            if (resInfo.terrainTypes.Contains<string>(terrainTypeName))
-    //                            {
-    //                                terrainTypeName = FindRegionName(checkTileBase);
-
-    //                                continue;
-    //                            }
-    //                            canSpawn = false;
-    //                        }
-
-    //                    }
-    //                }
-                   
-    //            }
-    //        }
-    //    }
-    //}
 
     public string FindRegionName(TileBase tile)
     {
