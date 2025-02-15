@@ -73,9 +73,11 @@ public class MaterialUse
     {
         count -= removeCount;
         materialCountUI.SetCountUI(count);
+        if (materialCountUI.txtMaterialAdd != null) materialCountUI.ShowAddedMaterial(-removeCount);
     }
     public void AddCount(int addCount){ 
         count += addCount;
         materialCountUI.SetCountUI(count);
+        if (materialCountUI.txtMaterialAdd != null) materialCountUI.ShowAddedMaterial(addCount); 
     }
 }

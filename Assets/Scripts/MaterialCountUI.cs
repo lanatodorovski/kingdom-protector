@@ -9,6 +9,7 @@ public class MaterialCountUI : MonoBehaviour
 {
     private Image materialImage;
     private TextMeshProUGUI textView;
+    public TextMeshProUGUI txtMaterialAdd;
 
     private void Awake()
     {
@@ -23,6 +24,7 @@ public class MaterialCountUI : MonoBehaviour
             }
         }
     }
+  
     public void SetMaterial(MaterialUse material)
     {
         SetMaterial(material.GetBuildMaterialSO().GetSprite(), material.GetCount());
@@ -37,5 +39,20 @@ public class MaterialCountUI : MonoBehaviour
     public void SetCountUI(int count)
     {
         textView.text = count.ToString();
+    }
+
+    public void ShowAddedMaterial(int materialCount)
+    {
+        if (materialCount >= 0)
+        {
+            txtMaterialAdd.text = "+" + materialCount.ToString();
+        }
+        else
+        {
+            txtMaterialAdd.text = materialCount.ToString();
+        }
+        Debug.Log(txtMaterialAdd.text);
+        txtMaterialAdd.GetComponent<Animator>().SetTrigger("Show");
+
     }
 }
