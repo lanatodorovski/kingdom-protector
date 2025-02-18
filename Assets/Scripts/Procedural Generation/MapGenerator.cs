@@ -5,6 +5,7 @@ using System.Linq;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.InputSystem.HID;
 using UnityEngine.Tilemaps;
 
 public class MapGenerator : MonoBehaviour
@@ -48,10 +49,14 @@ public class MapGenerator : MonoBehaviour
 
 
         mapRenderer.ClearAllTiles();
-        foreach (Transform child in resourceRenderer.transform)
+        for (int i = resourceRenderer.transform.childCount - 1; i >= 0; i--)
         {
-            DestroyImmediate(child.gameObject);
+            DestroyImmediate(resourceRenderer.transform.GetChild(i).gameObject);
         }
+        //while(resourceRenderer.transform.childCount != 0)
+        //{
+        //    Destroy(resourceRenderer.transform.GetChild(0)); 
+        //}
         if (drawMode == DrawMode.NoiseMap)
         {
             DrawNoiseMap(noiseMap);
@@ -112,8 +117,8 @@ public class MapGenerator : MonoBehaviour
                         if (spawnEnvironment && borderX && borderY)
                         {
                             GameObject resource = getResource(regions[i].name);
-                            if(resource != null)Instantiate(resource, (Vector3)startPosition + new Vector3(x + 0.5f, y + 0.5f, 0), Quaternion.identity, resourceRenderer.transform);                            
-                        }                        
+                            if (resource != null) Instantiate(resource, (Vector3)startPosition + new Vector3(x + 0.5f, y + 0.5f, 0), Quaternion.identity, resourceRenderer.transform);
+                        }
                         break;
                     }
                 }
@@ -136,7 +141,9 @@ public class MapGenerator : MonoBehaviour
         if (randomFrequency <= spawnFrequency)
         {
             float spawnStrength = UnityEngine.Random.Range(0f, 1f);
-            ResourceInformation resource = Array.Find(spawnInfo, resource => resource.spawnStrength > spawnStrength && resource.terrainTypes.Contains(regionName));
+            ResourceInformation resource = Array.Find(spawnInfo, resource => {
+                return resource.spawnStrength > spawnStrength && resource.terrainTypes.Contains(regionName); 
+            });
             return resource.ResourceGO;
         }
         return null;

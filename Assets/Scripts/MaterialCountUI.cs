@@ -11,9 +11,11 @@ public class MaterialCountUI : MonoBehaviour
     private TextMeshProUGUI textView;
     public TextMeshProUGUI txtMaterialAdd;
 
+    private Animator textMaterialAnimator;
     private void Awake()
     {
         textView = GetComponentInChildren<TextMeshProUGUI>();
+        textMaterialAnimator = txtMaterialAdd.GetComponent<Animator>();
         Image[] images = GetComponentsInChildren<Image>();
         foreach (Image image in images)
         {
@@ -43,16 +45,36 @@ public class MaterialCountUI : MonoBehaviour
 
     public void ShowAddedMaterial(int materialCount)
     {
+        
         if (materialCount >= 0)
         {
-            txtMaterialAdd.text = "+" + materialCount.ToString();
+            // FIX ADDITION DISPLAY - IF TWO RESOURCE OBJECTS GET HIT ONLY ONE's VALUE GETS DISPLAYED
+            int showMaterialCount = materialCount;
+            //bool shouldChange = isMaterialAddPlaying("MaterialGain");
+            //Debug.Log(shouldChange);
+            //if (shouldChange)
+            //{
+            //    Debug.Log("animation is playing");
+            //    showMaterialCount += int.Parse(txtMaterialAdd.text.Split("+")[1]);
+            //};
+            txtMaterialAdd.text = "+" + showMaterialCount.ToString();
         }
         else
         {
             txtMaterialAdd.text = materialCount.ToString();
         }
-        Debug.Log(txtMaterialAdd.text);
-        txtMaterialAdd.GetComponent<Animator>().SetTrigger("Show");
+        Debug.Log(txtMaterialAdd.text);       
+        textMaterialAnimator.SetTrigger("Show");
 
+
+    }
+    bool isMaterialAddPlaying( string stateName)
+    {
+        AnimatorStateInfo animationState= textMaterialAnimator.GetCurrentAnimatorStateInfo(0);
+        if (
+                animationState.normalizedTime < 1.0f)
+            return true;
+        else
+            return false;
     }
 }

@@ -9,13 +9,11 @@ public class MapBoundsControl : MonoBehaviour
     public Vector2 playerBoundsOffset;
 
     private MapGenerator mapGen;
-    private void Awake()
-    {
-        mapGen = gameObject.GetComponent<MapGenerator>();
-    }
 
     public void SetBounds()
     {
+        mapGen = gameObject.GetComponent<MapGenerator>();
+
         SetCameraBounds();
         SetPlayerBounds();
     }
