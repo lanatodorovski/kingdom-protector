@@ -55,12 +55,11 @@ public class MaterialCountUI : MonoBehaviour
     {
         
         if (materialCount >= 0)
-        {
-            // FIX ADDITION DISPLAY - IF TWO RESOURCE OBJECTS GET HIT ONLY ONE's VALUE GETS DISPLAYED
+        {            
             int showMaterialCount = materialCount;
    
             showMaterialCount += int.Parse(txtMaterialAdd.text.Split("+")[1]);     
-            Debug.Log("aiduhawiod   " + showMaterialCount);
+            //Debug.Log("aiduhawiod   " + showMaterialCount);
             txtMaterialAdd.text = "+" + showMaterialCount.ToString();
         }
         else
