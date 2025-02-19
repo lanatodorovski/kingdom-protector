@@ -15,7 +15,7 @@ public class MaterialCountUI : MonoBehaviour
     private void Awake()
     {
         textView = GetComponentInChildren<TextMeshProUGUI>();
-        textMaterialAnimator = txtMaterialAdd.GetComponent<Animator>();
+        if(txtMaterialAdd != null) textMaterialAnimator = txtMaterialAdd.GetComponent<Animator>();
         Image[] images = GetComponentsInChildren<Image>();
         foreach (Image image in images)
         {
@@ -26,7 +26,15 @@ public class MaterialCountUI : MonoBehaviour
             }
         }
     }
-  
+    private void FixedUpdate()
+    {
+        AnimatorStateInfo animatorState = textMaterialAnimator.GetCurrentAnimatorStateInfo(0);
+        if (animatorState.IsName("Idle"))
+        {
+            txtMaterialAdd.text = "+0";
+        }
+    }
+
     public void SetMaterial(MaterialUse material)
     {
         SetMaterial(material.GetBuildMaterialSO().GetSprite(), material.GetCount());
@@ -50,13 +58,9 @@ public class MaterialCountUI : MonoBehaviour
         {
             // FIX ADDITION DISPLAY - IF TWO RESOURCE OBJECTS GET HIT ONLY ONE's VALUE GETS DISPLAYED
             int showMaterialCount = materialCount;
-            //bool shouldChange = isMaterialAddPlaying("MaterialGain");
-            //Debug.Log(shouldChange);
-            //if (shouldChange)
-            //{
-            //    Debug.Log("animation is playing");
-            //    showMaterialCount += int.Parse(txtMaterialAdd.text.Split("+")[1]);
-            //};
+   
+            showMaterialCount += int.Parse(txtMaterialAdd.text.Split("+")[1]);     
+            Debug.Log("aiduhawiod   " + showMaterialCount);
             txtMaterialAdd.text = "+" + showMaterialCount.ToString();
         }
         else
@@ -65,16 +69,5 @@ public class MaterialCountUI : MonoBehaviour
         }
         Debug.Log(txtMaterialAdd.text);       
         textMaterialAnimator.SetTrigger("Show");
-
-
-    }
-    bool isMaterialAddPlaying( string stateName)
-    {
-        AnimatorStateInfo animationState= textMaterialAnimator.GetCurrentAnimatorStateInfo(0);
-        if (
-                animationState.normalizedTime < 1.0f)
-            return true;
-        else
-            return false;
     }
 }
