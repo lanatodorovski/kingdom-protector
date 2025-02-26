@@ -49,9 +49,4 @@ public class CharacterAnimationHandler : MonoBehaviour
             }
         }
     }
-
-    public void FlipFlipGOHandler(int turnDirection)
-    {
-        transform.localScale = new Vector3(turnDirection, transform.localScale.y, transform.localScale.z);
-    }
 }

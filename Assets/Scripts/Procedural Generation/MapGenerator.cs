@@ -10,6 +10,8 @@ using UnityEngine.Tilemaps;
 
 public class MapGenerator : MonoBehaviour
 {
+    public bool generateOnLoad = false;
+
     public int mapWidth;
     public int mapHeight;
     public float noiseScale;
@@ -40,7 +42,10 @@ public class MapGenerator : MonoBehaviour
     public Vector2Int borderResourceSpawnGap;
     public bool canSpawnResources = true;
 
-
+    public void Start()
+    {
+        if (generateOnLoad) GenerateMap();
+    }
     public void GenerateMap()
     {
         if (randomiseSeed) seed = UnityEngine.Random.RandomRange(-100000, 100000);
@@ -53,10 +58,6 @@ public class MapGenerator : MonoBehaviour
         {
             DestroyImmediate(resourceRenderer.transform.GetChild(i).gameObject);
         }
-        //while(resourceRenderer.transform.childCount != 0)
-        //{
-        //    Destroy(resourceRenderer.transform.GetChild(0)); 
-        //}
         if (drawMode == DrawMode.NoiseMap)
         {
             DrawNoiseMap(noiseMap);
@@ -123,14 +124,10 @@ public class MapGenerator : MonoBehaviour
                     }
                 }
             }
-        }
-        //if (canSpawnResources) SpawnResource(tileMap)
+        }       
         
         BoundsInt bounds = new BoundsInt(startPosition, new Vector3Int(mapWidth, mapHeight, 1));
-        //BoundsInt boundsInt = new BoundsInt();
-        //boundsInt.min = startPosition;
-        //boundsInt.max = -startPosition;
-        //mapRenderer.RefreshAllTiles();
+
         mapRenderer.SetTilesBlock(bounds, tileMap);
     }
 

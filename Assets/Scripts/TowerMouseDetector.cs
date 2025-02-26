@@ -27,11 +27,11 @@ public class TowerMouseDetector : MonoBehaviour
                 GameObject hitGO = hit.collider.gameObject;
                 if (hitGO == gameObject)
                 {
-                    control.ToggleUI(true);
+                    if(control != null) control.ToggleUI(true);
                     return;
                 }
             }
-            control.ToggleUI(false);
+            if (control != null) control.ToggleUI(false);
         }
     }
 
