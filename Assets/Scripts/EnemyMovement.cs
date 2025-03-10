@@ -39,6 +39,9 @@ public class EnemyMovement : MonoBehaviour
         {
             if (nthPathPoint == path.GetPathPointCount())
             {
+                //FindAnyObjectByType<PopulationHandler>().EliminatePopulationBy(gameObject);
+                int eliminationCount = gameObject.GetComponent<EnemyPopulationHandler>().GetEliminationCount();
+                FindAnyObjectByType<PopulationHandler>().RemovePopulation(eliminationCount);
                 Destroy(gameObject);
                 return;
             }

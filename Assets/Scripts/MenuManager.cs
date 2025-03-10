@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,10 +11,11 @@ public class MenuManager : MonoBehaviour
 
     
     [SerializeField] Canvas CurrentMenuUI;
+    [SerializeField] Canvas SettingsUI;
+    [SerializeField] Canvas DeathMenuUI;
     [SerializeField] private bool disableOnStart;
     [SerializeField] private bool canToggleMenu;
 
-    [SerializeField] Canvas SettingsUI;
 
     private Canvas ActiveUI;
 
@@ -39,6 +41,17 @@ public class MenuManager : MonoBehaviour
         {
             ActiveUI = CurrentMenuUI;
         }
+        ToggleActiveUI();
+    }
+    public void ToggleDeathUI()
+    {
+        if (ActiveUI == null)
+        {
+            ActiveUI = DeathMenuUI;
+        }
+        TogglePause();
+    }
+    public void TogglePause() {
         isPaused = !isPaused;
         ActiveUI.gameObject.SetActive(isPaused);
         Time.timeScale = isPaused ? 0f : 1f;
@@ -59,6 +72,10 @@ public class MenuManager : MonoBehaviour
     {
         SceneManager.LoadScene("CastleScene");
         Time.timeScale = 1f;
+    }
+    public void RestartLevel()
+    {
+
     }
     public void LoadGame()
     {

@@ -16,12 +16,21 @@ public class EnemyPathScript : MonoBehaviour
     private EnemyPathScript switchToPath = null;
 
     private WaveConfig currentWave;
+    private bool isAllSpawned = false;
     // Start is called before the first frame update
     void Start()
     {
         currentWave = waveSO[0];
         AddAdditionalPoints();
         StartCoroutine(StartWave());
+    }
+
+    private void Update()
+    {
+        if (isAllSpawned && transform.parent.GetComponentsInChildren<EnemyMovement>().Length == 0)
+        {
+            //Debug.Log("WAVE IS DONE!"); 
+        }
     }
 
     IEnumerator StartWave()
@@ -32,6 +41,8 @@ public class EnemyPathScript : MonoBehaviour
             enemy.GetComponent<EnemyMovement>().SetPath(this);
             yield return new WaitForSeconds(enemySpawnDelay);
         }
+        Debug.Log("ALL ENEMIES SPAWNED");
+        isAllSpawned = true;
     }
     public GameObject GetPathPointAt(int index)
     {

@@ -28,11 +28,14 @@ public class MaterialCountUI : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        AnimatorStateInfo animatorState = textMaterialAnimator.GetCurrentAnimatorStateInfo(0);
-        if (animatorState.IsName("Idle"))
+        if(textMaterialAnimator != null)
         {
-            txtMaterialAdd.text = "+0";
-        }
+            AnimatorStateInfo animatorState = textMaterialAnimator.GetCurrentAnimatorStateInfo(0);
+            if (animatorState.IsName("Idle"))
+            {
+                txtMaterialAdd.text = "+0";
+            }
+        }       
     }
 
     public void SetMaterial(MaterialUse material)
@@ -58,15 +61,14 @@ public class MaterialCountUI : MonoBehaviour
         {            
             int showMaterialCount = materialCount;
    
-            showMaterialCount += int.Parse(txtMaterialAdd.text.Split("+")[1]);     
-            //Debug.Log("aiduhawiod   " + showMaterialCount);
+            showMaterialCount += int.Parse(txtMaterialAdd.text.Split("+")[1]);                
             txtMaterialAdd.text = "+" + showMaterialCount.ToString();
         }
         else
         {
             txtMaterialAdd.text = materialCount.ToString();
         }
-        Debug.Log(txtMaterialAdd.text);       
+        //Debug.Log(txtMaterialAdd.text);       
         textMaterialAnimator.SetTrigger("Show");
     }
 }
