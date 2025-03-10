@@ -41,13 +41,14 @@ public class MenuManager : MonoBehaviour
         {
             ActiveUI = CurrentMenuUI;
         }
-        ToggleActiveUI();
+        TogglePause();
     }
     public void ToggleDeathUI()
     {
         if (ActiveUI == null)
         {
             ActiveUI = DeathMenuUI;
+            canToggleMenu = false;
         }
         TogglePause();
     }
