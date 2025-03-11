@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,8 +16,18 @@ public class EnemyPathScript : MonoBehaviour
     [SerializeField] private GameObject nextPoint = null;
     private EnemyPathScript switchToPath = null;
 
+    [Header("Main Path - Level Completion")]
+    private static float levelCompletionDelay = 1.0f;
+    public static bool levelCompleted;
+
     private WaveConfig currentWave;
-    private bool isAllSpawned = false;
+    [HideInInspector] public bool isAllSpawned = false;
+    EnemyPathScript[] enemyPathScripts;
+
+    private void Awake()
+    {
+        enemyPathScripts = transform.parent.GetComponentsInChildren<EnemyPathScript>();
+    }
     // Start is called before the first frame update
     void Start()
     {
@@ -27,22 +38,44 @@ public class EnemyPathScript : MonoBehaviour
 
     private void Update()
     {
-        if (isAllSpawned && transform.parent.GetComponentsInChildren<EnemyMovement>().Length == 0)
+        if (enemyPathScripts != null && !levelCompleted)
         {
-            //Debug.Log("WAVE IS DONE!"); 
+            bool uncompletePathExists = Array.Find(enemyPathScripts, 
+                enemyPathScript => enemyPathScript.isAllSpawned == false
+                || enemyPathScript.gameObject.GetComponentsInChildren<EnemyMovement>().Length > 0);
+            Debug.Log(uncompletePathExists);
+            if (!uncompletePathExists && FindAnyObjectByType<PopulationHandler>().GetPopulationCount() > 0)
+            {
+                StartCoroutine(SuccessfullyEndLevel());
+                levelCompleted = true;
+            }
         }
+                    
+        //if (isAllSpawned && transform.parent.GetComponentsInChildren<EnemyMovement>().Length == 0 && FindAnyObjectByType<PopulationHandler>().GetPopulationCount() > 0)
+        //{            
+        //    StartCoroutine(SuccessfullyEndLevel());
+        //    Debug.Log("WAVE IS DONE!");
+            
+        //}
+       
+
     }
 
     IEnumerator StartWave()
     {
         for (int i = 0; i < currentWave.GetEnemiesLength(); i++)
         {
-            GameObject enemy= Instantiate(currentWave.GetEnemyAt(i), spawnPoints[Random.Range(0, spawnPoints.Length)].transform);
+            GameObject enemy= Instantiate(currentWave.GetEnemyAt(i), spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Length)].transform);
             enemy.GetComponent<EnemyMovement>().SetPath(this);
             yield return new WaitForSeconds(enemySpawnDelay);
         }
         Debug.Log("ALL ENEMIES SPAWNED");
         isAllSpawned = true;
+    }
+    IEnumerator SuccessfullyEndLevel()
+    {
+        yield return new WaitForSecondsRealtime(levelCompletionDelay);
+        FindAnyObjectByType<MenuManager>().ToggleLevelCompletionUI();
     }
     public GameObject GetPathPointAt(int index)
     {
@@ -50,7 +83,7 @@ public class EnemyPathScript : MonoBehaviour
     }
     public Vector2 GetRandomPositionFromPoint(int index)
     {
-        return pathPoints[index].transform.position + (Vector3) Random.insideUnitCircle * radius;
+        return pathPoints[index].transform.position + (Vector3) UnityEngine.Random.insideUnitCircle * radius;
     }
     public int GetPathPointCount()
     {

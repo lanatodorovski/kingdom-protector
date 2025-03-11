@@ -38,5 +38,10 @@ public class PopulationHandler : MonoBehaviour
         populationText.text = population.ToString();
     }
 
+    public int GetPopulationCount()
+    {
+        return population;
+    }
+
 
 }

@@ -10545,10 +10545,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fa56b612d3fc8849bf3715fa7913b94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CurrentMenuUI: {fileID: 7391159308064266980}
+  MenuUI: {fileID: 0}
+  SettingsUI: {fileID: 1603953813}
+  DeathMenuUI: {fileID: 0}
+  LevelCompletionUI: {fileID: 0}
   disableOnStart: 0
   canToggleMenu: 0
-  SettingsUI: {fileID: 1603953813}
 --- !u!1001 &1353551181
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11334,7 +11336,7 @@ PrefabInstance:
       objectReference: {fileID: 1257963043}
     - target: {fileID: 5439303214980362394, guid: 8adda8ddbece1c74cb79092916bed68f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ToggleSettings
+      value: ToggleSettingsUI
       objectReference: {fileID: 0}
     - target: {fileID: 5439303214980362394, guid: 8adda8ddbece1c74cb79092916bed68f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
@@ -11507,11 +11509,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7391159308659066586, guid: 8adda8ddbece1c74cb79092916bed68f, type: 3}
   m_PrefabInstance: {fileID: 7391159308064266976}
   m_PrefabAsset: {fileID: 0}
---- !u!223 &7391159308064266980 stripped
-Canvas:
-  m_CorrespondingSourceObject: {fileID: 7391159308659066585, guid: 8adda8ddbece1c74cb79092916bed68f, type: 3}
-  m_PrefabInstance: {fileID: 7391159308064266976}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8934969454896285658
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11537,7 +11534,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3710214535556195579, guid: aaebdaa35e002d34b97fb742ec4abfa2, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: ToggleSettings
+      value: ToggleSettingsUI
       objectReference: {fileID: 0}
     - target: {fileID: 3710214535556195579, guid: aaebdaa35e002d34b97fb742ec4abfa2, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName

@@ -10,9 +10,10 @@ public class MenuManager : MonoBehaviour
     public static bool isPaused;
 
     
-    [SerializeField] Canvas CurrentMenuUI;
+    [SerializeField] Canvas MenuUI;
     [SerializeField] Canvas SettingsUI;
     [SerializeField] Canvas DeathMenuUI;
+    [SerializeField] Canvas LevelCompletionUI;
     [SerializeField] private bool disableOnStart;
     [SerializeField] private bool canToggleMenu;
 
@@ -25,23 +26,23 @@ public class MenuManager : MonoBehaviour
     }
     private void Start()
     {
-        if (disableOnStart && CurrentMenuUI != null) CurrentMenuUI.gameObject.SetActive(false);
-        if(!disableOnStart) ActiveUI = CurrentMenuUI;
+        if (disableOnStart && MenuUI != null) MenuUI.gameObject.SetActive(false);
+        if(!disableOnStart) ActiveUI = MenuUI;
     }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape) && canToggleMenu)
         {
-            ToggleActiveUI();
+            ToggleMenuUI();
         }
     }
-    public void ToggleActiveUI()
+    public void ToggleMenuUI()
     {
         if(ActiveUI == null)
         {
-            ActiveUI = CurrentMenuUI;
+            ActiveUI = MenuUI;
         }
-        TogglePause();
+        ToggleUI();
     }
     public void ToggleDeathUI()
     {
@@ -50,9 +51,19 @@ public class MenuManager : MonoBehaviour
             ActiveUI = DeathMenuUI;
             canToggleMenu = false;
         }
-        TogglePause();
+        ToggleUI();
     }
-    public void TogglePause() {
+
+    public void ToggleLevelCompletionUI()
+    {
+        if (ActiveUI == null)
+        {
+            ActiveUI = LevelCompletionUI;
+            canToggleMenu = false;
+        }
+        ToggleUI();
+    }
+    public void ToggleUI() {
         isPaused = !isPaused;
         ActiveUI.gameObject.SetActive(isPaused);
         Time.timeScale = isPaused ? 0f : 1f;
@@ -63,10 +74,10 @@ public class MenuManager : MonoBehaviour
         //MAKE A FUNCTONALITY TO SAVE LOCALY HERE
         Application.Quit();
     }
-    public void ToggleSettings()
+    public void ToggleSettingsUI()
     {
         ActiveUI.gameObject.SetActive(false);
-        ActiveUI = ActiveUI == SettingsUI ? CurrentMenuUI : SettingsUI;
+        ActiveUI = ActiveUI == SettingsUI ? MenuUI : SettingsUI;
         ActiveUI.gameObject.SetActive(true);
     }
     public void NewGame()
@@ -81,6 +92,11 @@ public class MenuManager : MonoBehaviour
     public void LoadGame()
     {
 
+    }
+    public void LoadExpeditionScene()
+    {
+        Time.timeScale = 1f;
+        SceneManager.LoadScene("ExpeditionScene");
     }
     public void MainMenu()
     {
