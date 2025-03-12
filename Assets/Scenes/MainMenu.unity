@@ -10545,7 +10545,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fa56b612d3fc8849bf3715fa7913b94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MenuUI: {fileID: 0}
+  MenuUI: {fileID: 7391159308064266980}
   SettingsUI: {fileID: 1603953813}
   DeathMenuUI: {fileID: 0}
   LevelCompletionUI: {fileID: 0}
@@ -11507,6 +11507,11 @@ PrefabInstance:
 --- !u!224 &7391159308064266977 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 7391159308659066586, guid: 8adda8ddbece1c74cb79092916bed68f, type: 3}
+  m_PrefabInstance: {fileID: 7391159308064266976}
+  m_PrefabAsset: {fileID: 0}
+--- !u!223 &7391159308064266980 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 7391159308659066585, guid: 8adda8ddbece1c74cb79092916bed68f, type: 3}
   m_PrefabInstance: {fileID: 7391159308064266976}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8934969454896285658
