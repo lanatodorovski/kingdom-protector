@@ -43,7 +43,7 @@ public class EnemyPathScript : MonoBehaviour
             bool uncompletePathExists = Array.Find(enemyPathScripts, 
                 enemyPathScript => enemyPathScript.isAllSpawned == false
                 || enemyPathScript.gameObject.GetComponentsInChildren<EnemyMovement>().Length > 0);
-            Debug.Log(uncompletePathExists);
+            //Debug.Log(uncompletePathExists);
             if (!uncompletePathExists && FindAnyObjectByType<PopulationHandler>().GetPopulationCount() > 0)
             {
                 StartCoroutine(SuccessfullyEndLevel());

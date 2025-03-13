@@ -13,6 +13,7 @@ public class MaterialCountUI : MonoBehaviour
 
     private Animator textMaterialAnimator;
     AnimatorStateInfo animatorState;
+    public static bool playingAnimation = false;
     private void Awake()
     {
         textView = GetComponentInChildren<TextMeshProUGUI>();
@@ -28,14 +29,14 @@ public class MaterialCountUI : MonoBehaviour
         }
     }
     private void Update()
-    {
-        if(textMaterialAnimator != null)
+    {       
+        if (textMaterialAnimator != null)
         {
-            AnimatorStateInfo animatorState = textMaterialAnimator.GetCurrentAnimatorStateInfo(0);
-            //if (animatorState.IsName("Idle"))
-            //{
-            //    txtMaterialAdd.text = "+0";               
-            //}
+            AnimatorStateInfo animatorState = textMaterialAnimator.GetCurrentAnimatorStateInfo(0);            
+            if (animatorState.IsName("Idle"))
+            {
+                playingAnimation = false;                
+            }
         }       
     }
 
@@ -55,13 +56,13 @@ public class MaterialCountUI : MonoBehaviour
         textView.text = count.ToString();
     }
 
-    public void ShowAddedMaterial(int materialCount) ///FIX THIS
+    public void ShowAddedMaterial(int materialCount)
     {
-        if (!animatorState.IsName("MaterialGain"))
-        {
+        if (!animatorState.IsName("MaterialGain") && !playingAnimation)
+        {                        
+            playingAnimation = true;
             txtMaterialAdd.text = "+0";
-            textMaterialAnimator.SetTrigger("Show");
-            Debug.Log("enters");                        
+            textMaterialAnimator.SetTrigger("Show");            
         }
         if (materialCount >= 0)
         {            
@@ -72,8 +73,6 @@ public class MaterialCountUI : MonoBehaviour
         else
         {
             txtMaterialAdd.text = materialCount.ToString();
-        }
-        //Debug.Log(txtMaterialAdd.text);       
-
+        }        
     }
 }
