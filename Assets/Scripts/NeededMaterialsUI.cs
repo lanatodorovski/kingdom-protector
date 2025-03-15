@@ -19,8 +19,8 @@ public class NeededMaterialsUI : MonoBehaviour
     {
         if(gameObject.transform.childCount == 0)
         {
-            MaterialCost[] materialCost = towerUpgrades.FindTowerByType(towerUpgrade).GetMaterialCosts();
-            foreach (MaterialCost material in materialCost)
+            MaterialCount[] materialCost = towerUpgrades.FindTowerByType(towerUpgrade).GetMaterialCosts();
+            foreach (MaterialCount material in materialCost)
             {
                 BuildMaterial buildMaterial = material.GetBuildMaterial();
                 MaterialUse materialUse = buildMaterialCollection.GetMaterialUse(buildMaterial);

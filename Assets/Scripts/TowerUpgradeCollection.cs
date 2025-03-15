@@ -32,7 +32,7 @@ public class TowerUpgradeCollection : MonoBehaviour
     public bool CanBuyUpgrade(TowerType upgrade)
     {
         TowerUpgradeSO towerUpgrade = FindTowerByType(upgrade);
-        foreach (MaterialCost costMaterial in towerUpgrade.GetMaterialCosts())
+        foreach (MaterialCount costMaterial in towerUpgrade.GetMaterialCosts())
         {
             int materialCount = buildMaterialCollection.GetCountByMaterial(costMaterial.GetBuildMaterial());
             if(materialCount < costMaterial.GetCount())
@@ -45,7 +45,7 @@ public class TowerUpgradeCollection : MonoBehaviour
     public void BuyUpgrade(TowerType upgrade)
     {
         TowerUpgradeSO towerUpgrade = FindTowerByType(upgrade);
-        foreach (MaterialCost costMaterial in towerUpgrade.GetMaterialCosts())
+        foreach (MaterialCount costMaterial in towerUpgrade.GetMaterialCosts())
         {
             MaterialUse materialCount = buildMaterialCollection.GetMaterialUse(costMaterial.GetBuildMaterial());
             materialCount.TakeAwayCount(costMaterial.GetCount());

@@ -13,9 +13,11 @@ public class BuildMaterialCollection : MonoBehaviour
     [SerializeField]
     MaterialUse[] materialUses;
 
-
+    [SerializeField] private bool loadFromLocalSave;
     public void Start()
     {
+        if(FindAnyObjectByType<LocalSaveSystem>() != null && loadFromLocalSave)      
+            LoadLocalMaterials();
         MaterialCountUISetup();
     }
     public MaterialUse GetMaterialUse(BuildMaterial material)
@@ -42,9 +44,34 @@ public class BuildMaterialCollection : MonoBehaviour
 
     private void MaterialCountUISetup()
     {
-        foreach(MaterialUse materialUse in materialUses)
+        foreach (MaterialUse materialUse in materialUses)
         {
             materialUse.GetMaterialCountUI().SetMaterial(materialUse);
+        }
+    }
+
+    public MaterialUse[] GetMaterialUses()
+    {
+        return materialUses;
+    }
+
+    public List<MaterialCount> GetAllAsMaterialCount()
+    {
+        List<MaterialCount> materialCounts = new List<MaterialCount>();
+        foreach (MaterialUse materialUse in materialUses)
+        {
+            materialCounts.Add(new MaterialCount(materialUse.GetBuildMaterialSO().GetBuildMaterial(), materialUse.GetCount()));
+        }
+        return materialCounts;
+    }
+
+    private void LoadLocalMaterials()
+    {
+        List<MaterialCount> savedMaterials = FindAnyObjectByType<LocalSaveSystem>().LoadSave(0).materialCount;
+        foreach (MaterialCount savedMaterial in savedMaterials)
+        {
+            MaterialUse materialUse = Array.Find(materialUses, material => material.GetBuildMaterialSO().GetBuildMaterial() == savedMaterial.GetBuildMaterial());
+            materialUse.SetCount(savedMaterial.GetCount());
         }
     }
 }
@@ -64,6 +91,10 @@ public class MaterialUse
     public int GetCount()
     {
         return count;
+    }
+    public void SetCount(int newCount)
+    {
+        this.count = newCount;
     }
     public MaterialCountUI GetMaterialCountUI()
     {

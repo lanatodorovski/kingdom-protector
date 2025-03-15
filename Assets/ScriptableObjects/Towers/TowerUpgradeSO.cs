@@ -8,7 +8,7 @@ public class TowerUpgradeSO : ScriptableObject
 {
     [SerializeField] TowerType type;
     [SerializeField] GameObject obj;
-    [SerializeField] MaterialCost[] materialCosts;
+    [SerializeField] MaterialCount[] materialCosts;
 
     public TowerType GetTowerType()
     {
@@ -18,9 +18,9 @@ public class TowerUpgradeSO : ScriptableObject
     {
         return obj;
     }
-    public MaterialCost[] GetMaterialCosts()
+    public MaterialCount[] GetMaterialCosts()
     {
-        return (MaterialCost[])materialCosts.Clone();
+        return (MaterialCount[])materialCosts.Clone();
     }
 
 }
@@ -31,11 +31,16 @@ public enum TowerType
     Basic
 }
 [Serializable] //MaterialCount is used to connect a count or cost with a certain BuildMaterial
-public class MaterialCost
+public class MaterialCount
 {
     [SerializeField] BuildMaterial material;
     [SerializeField] int cost;
 
+    public MaterialCount() { }
+    public MaterialCount(BuildMaterial material, int cost) { 
+        this.material = material;
+        this.cost = cost;
+    }
     public BuildMaterial GetBuildMaterial()
     {
         return material;
