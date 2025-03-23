@@ -50,7 +50,7 @@ public class TowerUpgradeCollection : MonoBehaviour
             MaterialUse materialCount = buildMaterialCollection.GetMaterialUse(costMaterial.GetBuildMaterial());
             materialCount.TakeAwayCount(costMaterial.GetCount());
         }
-    }
+    }    
 
 }
 

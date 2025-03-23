@@ -51,8 +51,13 @@ public class ExpeditionTimer : MonoBehaviour
 
         FindAnyObjectByType<MenuManager>().ToggleLevelCompletionUI();
         List<MaterialCount> materialCounts = FindAnyObjectByType<BuildMaterialCollection>().GetAllAsMaterialCount();
-        SaveSlotData saveSlot = new SaveSlotData(0, true, materialCounts);
-        FindAnyObjectByType<LocalSaveSystem>().SaveGame(saveSlot, 0);
+
+        LocalSaveSystem localSaveSystem = FindAnyObjectByType<LocalSaveSystem>();
+        localSaveSystem.SetHasGathered(true);
+        localSaveSystem.AddMaterialCount(materialCounts);
+        localSaveSystem.SaveGame();
+        //SaveSlotData saveSlot = new SaveSlotData(0, true, materialCounts);
+        //FindAnyObjectByType<LocalSaveSystem>().SaveGame(saveSlot, 0);
     }
 
     private void OnValidate()

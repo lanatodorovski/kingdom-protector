@@ -96,6 +96,12 @@ public class MenuManager : MonoBehaviour
     public void LoadExpeditionScene()
     {
         Time.timeScale = 1f;
+        LocalSaveSystem localSaveSystem = FindAnyObjectByType<LocalSaveSystem>();
+        localSaveSystem.SetHasGathered(false);
+        localSaveSystem.SetMaterialCount(FindAnyObjectByType<BuildMaterialCollection>().GetAllAsMaterialCount());
+        localSaveSystem.SetFieldTowerType();
+        localSaveSystem.SaveGame();
+
         SceneManager.LoadScene("ExpeditionScene");
     }
     public void MainMenu()

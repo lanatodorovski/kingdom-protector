@@ -33,18 +33,18 @@ public class TowerUpgradeControl : MonoBehaviour
         }
     }
     
-    public void SetUpgrade(TowerUpgradeButton button)
-    {
-        TowerType upgrade = button.towerUpgrade;
-
-        bool canBuy = towerUpgrades.CanBuyUpgrade(upgrade);
-        if (canBuy == false)
+    public void SetUpgrade(TowerType upgrade, bool checkForCost = true)
+    {        
+        if (checkForCost)
         {
-            //FailUpdate();
-            return;
+            bool canBuy = towerUpgrades.CanBuyUpgrade(upgrade);
+            if (canBuy == false)
+            {
+                //FailUpdate();
+                return;
+            }
+            towerUpgrades.BuyUpgrade(upgrade);
         }
-        towerUpgrades.BuyUpgrade(upgrade);
-
         GameObject upgradedTower = Instantiate(towerUpgrades.FindTowerByType(upgrade).GetTowerGameObject());
         upgradedTower.transform.parent = gameObject.transform.parent;
         upgradedTower.transform.localPosition = gameObject.transform.localPosition;
@@ -53,7 +53,15 @@ public class TowerUpgradeControl : MonoBehaviour
         upgradedTower.transform.SetSiblingIndex(gameObject.transform.GetSiblingIndex());
         Destroy(gameObject);
     }
+    public void SetUpgrade(TowerUpgradeButton button)
+    {
+        SetUpgrade(button.towerUpgrade);
+    }
 
+    public TowerType GetTowerType()
+    {
+        return towerType;
+    }
     //private void FailUpdate()
     //{
 

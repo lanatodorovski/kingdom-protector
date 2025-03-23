@@ -34,12 +34,12 @@ public enum TowerType
 public class MaterialCount
 {
     [SerializeField] BuildMaterial material;
-    [SerializeField] int cost;
+    [SerializeField] int count;
 
     public MaterialCount() { }
     public MaterialCount(BuildMaterial material, int cost) { 
         this.material = material;
-        this.cost = cost;
+        this.count = cost;
     }
     public BuildMaterial GetBuildMaterial()
     {
@@ -47,6 +47,10 @@ public class MaterialCount
     }
     public int GetCount()
     {
-        return cost;
+        return count;
+    }
+    public void AddCount(int addCount)
+    {
+        count += addCount;
     }
 }

@@ -2,30 +2,97 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using System.Xml.Serialization;
 using UnityEngine;
 
 public class LocalSaveSystem : MonoBehaviour
 {
     private string savePath;
 
+    public static int slotIndex = 0;
+    private SaveSlotData currentSlotData;
+
+    private void Start()
+    {
+        currentSlotData = LoadSave(slotIndex);
+        LoadFieldTowerType();
+    }
     private void Awake()
     {
         savePath = Application.persistentDataPath + "/saveprogress.json";
-        Debug.Log(savePath);
     }
-    public void SaveGame(SaveSlotData data, int slotIndex)
+    public void SaveGame(SaveSlotData data)
     {
         SaveDataWrapper dataWapper = LoadAllSaves();
         dataWapper.data[slotIndex] = data;
-        //foreach (SaveSlotData slotData in saveSlots)
-        //{
-        //    Debug.Log(slotData);
-        //}
         string json = JsonUtility.ToJson(dataWapper);
-        Debug.Log(json);
         File.WriteAllText(savePath, json);
     }
+    public void SaveGame()
+    {
+        SaveGame(currentSlotData);
+    }
+    
+    public void NextLevel()
+    {        
+        currentSlotData.level++;
+        currentSlotData.hasGathered = false;        
+    }
+    public void SetHasGathered(bool hasGathered)
+    {        
+        currentSlotData.hasGathered = hasGathered;        
+    }
+    public void SetMaterialCount(List<MaterialCount> addedMaterialCounts)
+    {
+        currentSlotData.materialCount = addedMaterialCounts;
+    }
+    public void AddMaterialCount(List<MaterialCount> addedMaterialCounts)
+    {                
+        foreach(MaterialCount materialCount in addedMaterialCounts)
+        {
+            MaterialCount foundMaterial = Array.Find(currentSlotData.materialCount.ToArray(), savedMaterialCount =>
+                savedMaterialCount.GetBuildMaterial() == materialCount.GetBuildMaterial()
+                );        
+            if(foundMaterial != null)
+            {
+                foundMaterial.AddCount(materialCount.GetCount());
+                Debug.Log($"{materialCount.GetCount()} is added to {materialCount.GetBuildMaterial().ToString()} material and there is now {foundMaterial.GetCount()} of it");
+            }
+            else
+            {
+                currentSlotData.materialCount.Add(materialCount);
+            }
+        }
+        Debug.Log(JsonUtility.ToJson(currentSlotData));
+    }
+    public void SetFieldTowerType()
+    {
+        TowerUpgradeControl[] towers = GameObject.FindGameObjectWithTag("Tower").transform.parent.GetComponentsInChildren<TowerUpgradeControl>();
+        foreach (TowerUpgradeControl tower in towers)
+        {
+            Debug.Log(tower.GetTowerType());
+        }
+        if (towers.Length != 0) {
+            currentSlotData.fieldTowerType = Array.ConvertAll(towers, tower => tower.GetTowerType()).ToList();
+        }        
 
+    }
+    public void LoadFieldTowerType()
+    {
+        TowerUpgradeControl[]? towers = GameObject.FindGameObjectWithTag("Tower").transform.parent.GetComponentsInChildren<TowerUpgradeControl>();
+        if (towers == null) return;
+        for(int i = 0; i < currentSlotData.fieldTowerType.Count(); i++)
+        {
+            TowerUpgradeControl towerUpgrade = towers[i];
+            Debug.Log(currentSlotData.fieldTowerType[i]);
+            if(towerUpgrade.GetTowerType() != currentSlotData.fieldTowerType[i])
+            {
+                towerUpgrade.SetUpgrade(currentSlotData.fieldTowerType[i], false);
+            }
+           
+        }
+    }
     public SaveSlotData LoadSave(int slotIndex)
     {
         SaveDataWrapper saveSlots = LoadAllSaves();
@@ -41,6 +108,17 @@ public class LocalSaveSystem : MonoBehaviour
         }
         return new SaveDataWrapper();
     }
+
+    public static void SetSlotIndex(int slotIndex)
+    {
+        slotIndex = slotIndex;
+        PlayerPrefs.SetInt("slotIndex", slotIndex);
+    }
+    private static void GetSlotIndex()
+    {
+        slotIndex = PlayerPrefs.GetInt("slotIndex");
+    }
+    
 }
 
 [Serializable]
@@ -54,11 +132,13 @@ public class SaveSlotData
     public int level;
     public bool hasGathered;
     public List<MaterialCount> materialCount;
+    public List<TowerType> fieldTowerType;
 
-    public SaveSlotData(int level = 0, bool hasGathered = false, List<MaterialCount> materialCount = null)
+    public SaveSlotData(int level = 0, bool hasGathered = false, List<MaterialCount> materialCount = null, List<TowerType> towerType = null)
     {
         this.level = level;
         this.hasGathered = hasGathered;
         this.materialCount = materialCount == null ? new List<MaterialCount>() : materialCount;
+        this.fieldTowerType = towerType;
     }
 }
