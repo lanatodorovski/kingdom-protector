@@ -76,6 +76,12 @@ public class EnemyPathScript : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(levelCompletionDelay);
         FindAnyObjectByType<MenuManager>().ToggleLevelCompletionUI();
+
+        LocalSaveSystem localSaveSystem = FindAnyObjectByType<LocalSaveSystem>();
+        localSaveSystem.SetHasGathered(false);
+        localSaveSystem.SetMaterialCount(FindAnyObjectByType<BuildMaterialCollection>().GetAllAsMaterialCount());
+        localSaveSystem.SetFieldTowerType();
+        localSaveSystem.SaveGame();
     }
     public GameObject GetPathPointAt(int index)
     {

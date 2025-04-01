@@ -67,7 +67,7 @@ public class BuildMaterialCollection : MonoBehaviour
 
     private void LoadLocalMaterials()
     {
-        List<MaterialCount> savedMaterials = FindAnyObjectByType<LocalSaveSystem>().LoadSave(0).materialCount;
+        List<MaterialCount> savedMaterials = FindAnyObjectByType<LocalSaveSystem>().LoadSave().materialCount;
         foreach (MaterialCount savedMaterial in savedMaterials)
         {
             MaterialUse materialUse = Array.Find(materialUses, material => material.GetBuildMaterialSO().GetBuildMaterial() == savedMaterial.GetBuildMaterial());

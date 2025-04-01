@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour
 {
@@ -14,6 +17,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] Canvas SettingsUI;
     [SerializeField] Canvas DeathMenuUI;
     [SerializeField] Canvas LevelCompletionUI;
+    [SerializeField] Canvas GameSlotUI;
     [SerializeField] private bool disableOnStart;
     [SerializeField] private bool canToggleMenu;
 
@@ -28,6 +32,7 @@ public class MenuManager : MonoBehaviour
     {
         if (disableOnStart && MenuUI != null) MenuUI.gameObject.SetActive(false);
         if(!disableOnStart) ActiveUI = MenuUI;
+        SetupGameSlotUI();
     }
     private void Update()
     {
@@ -52,6 +57,12 @@ public class MenuManager : MonoBehaviour
             canToggleMenu = false;
         }
         ToggleUI();
+    }
+    public void ToggleGameSlotUI()
+    {
+        ActiveUI.gameObject.SetActive(false);
+        ActiveUI = ActiveUI == GameSlotUI ? MenuUI : GameSlotUI;
+        ActiveUI.gameObject.SetActive(true);
     }
 
     public void ToggleLevelCompletionUI()
@@ -91,21 +102,38 @@ public class MenuManager : MonoBehaviour
     }
     public void LoadGame()
     {
-
+        Time.timeScale = 1f;
+        if (FindAnyObjectByType<LocalSaveSystem>().LoadSave().hasGathered)
+        {
+            SceneManager.LoadScene("CastleScene");
+        }
+        else
+        {
+            SceneManager.LoadScene("ExpeditionScene");
+        }
     }
     public void LoadExpeditionScene()
     {
         Time.timeScale = 1f;
-        LocalSaveSystem localSaveSystem = FindAnyObjectByType<LocalSaveSystem>();
-        localSaveSystem.SetHasGathered(false);
-        localSaveSystem.SetMaterialCount(FindAnyObjectByType<BuildMaterialCollection>().GetAllAsMaterialCount());
-        localSaveSystem.SetFieldTowerType();
-        localSaveSystem.SaveGame();
-
         SceneManager.LoadScene("ExpeditionScene");
     }
     public void MainMenu()
     {
         SceneManager.LoadScene("MainMenu");
+    }
+
+    private void SetupGameSlotUI()
+    {
+        Button[] loadButtons = GameSlotUI.GetComponentsInChildren<Button>();        
+
+
+        LocalSaveSystem saveSystem = FindAnyObjectByType<LocalSaveSystem>();
+        for(int i = 0; i < 3; i++)
+        {
+            TextMeshProUGUI[] textFields = loadButtons[i].GetComponentsInChildren<TextMeshProUGUI>();            
+            SaveSlotData saveSlot = saveSystem.LoadSave(i);            
+            textFields[1].text = "Level: " + (saveSlot.level == 0 || saveSlot == null ? "/" : saveSlot.level.ToString());
+            textFields[2].text = "Last Saved: " + (saveSlot.GetLastSaved() == DateTime.MinValue || saveSlot == null ? "/" : saveSlot.lastSaved.ToString());
+        }
     }
 }

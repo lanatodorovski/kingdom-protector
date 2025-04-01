@@ -4,19 +4,21 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Xml.Serialization;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LocalSaveSystem : MonoBehaviour
 {
     private string savePath;
 
-    public static int slotIndex = 0;
+    public static int slotIndex = -1;
     private SaveSlotData currentSlotData;
 
     private void Start()
     {
-        currentSlotData = LoadSave(slotIndex);
-        LoadFieldTowerType();
+        if(SceneManager.GetActiveScene().name != "MainMenu") currentSlotData = LoadSave();
+        if(SceneManager.GetActiveScene().name == "CastleScene") LoadFieldTowerType();
     }
     private void Awake()
     {
@@ -25,6 +27,7 @@ public class LocalSaveSystem : MonoBehaviour
     public void SaveGame(SaveSlotData data)
     {
         SaveDataWrapper dataWapper = LoadAllSaves();
+        data.SetLastSaved(DateTime.Now);
         dataWapper.data[slotIndex] = data;
         string json = JsonUtility.ToJson(dataWapper);
         File.WriteAllText(savePath, json);
@@ -93,10 +96,11 @@ public class LocalSaveSystem : MonoBehaviour
            
         }
     }
-    public SaveSlotData LoadSave(int slotIndex)
+    public SaveSlotData LoadSave(int certainSlotIndex = -1)
     {
         SaveDataWrapper saveSlots = LoadAllSaves();
-        return saveSlots?.data[slotIndex];
+        int index = (certainSlotIndex > -1) ? certainSlotIndex : slotIndex;
+        return saveSlots.data[index];
     }
 
     private SaveDataWrapper LoadAllSaves()
@@ -106,12 +110,13 @@ public class LocalSaveSystem : MonoBehaviour
             string json = File.ReadAllText(savePath);        
             return JsonUtility.FromJson<SaveDataWrapper>(json);
         }
+
         return new SaveDataWrapper();
     }
 
-    public static void SetSlotIndex(int slotIndex)
+    public static void SetSlotIndex(int newSlotIndex)
     {
-        slotIndex = slotIndex;
+        slotIndex = newSlotIndex;
         PlayerPrefs.SetInt("slotIndex", slotIndex);
     }
     private static void GetSlotIndex()
@@ -124,7 +129,14 @@ public class LocalSaveSystem : MonoBehaviour
 [Serializable]
 public class SaveDataWrapper
 {
-    public SaveSlotData[] data = new SaveSlotData[3];
+    public SaveSlotData[] data = new SaveSlotData[3]; // fills the array only with nulls
+    public SaveDataWrapper()
+    {
+        for (int i = 0; i < data.Length; i++)
+        {
+            data[i] = new SaveSlotData();
+        }
+    }
 }
 [Serializable]
 public class SaveSlotData
@@ -133,12 +145,23 @@ public class SaveSlotData
     public bool hasGathered;
     public List<MaterialCount> materialCount;
     public List<TowerType> fieldTowerType;
+    public string lastSaved;
+       
 
-    public SaveSlotData(int level = 0, bool hasGathered = false, List<MaterialCount> materialCount = null, List<TowerType> towerType = null)
+    public SaveSlotData(int level = 0, bool hasGathered = false, List<MaterialCount> materialCount = null, List<TowerType> towerType = null, DateTime lastSaved = default(DateTime))
     {
         this.level = level;
         this.hasGathered = hasGathered;
         this.materialCount = materialCount == null ? new List<MaterialCount>() : materialCount;
         this.fieldTowerType = towerType;
+        this.lastSaved = lastSaved.ToString("yyyy-MM-dd HH:mm:ss");
+    }
+    public void SetLastSaved(DateTime date)
+    {
+        this.lastSaved = date.ToString("yyyy-MM-dd HH:mm:ss");
+    }
+    public DateTime GetLastSaved()
+    {
+        return DateTime.Parse(this.lastSaved);
     }
 }
