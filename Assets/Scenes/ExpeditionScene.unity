@@ -7669,6 +7669,7 @@ MonoBehaviour:
   SettingsUI: {fileID: 1127479282}
   DeathMenuUI: {fileID: 0}
   LevelCompletionUI: {fileID: 372518218}
+  GameSlotUI: {fileID: 0}
   disableOnStart: 1
   canToggleMenu: 1
 --- !u!114 &474698979
@@ -17938,7 +17939,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe386c1bd728abd4da2376000d279234, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  generateOnLoad: 0
+  generateOnLoad: 1
   mapWidth: 100
   mapHeight: 100
   noiseScale: 10.8

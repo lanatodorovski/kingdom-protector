@@ -31,6 +31,7 @@ public class EnemyPathScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        levelCompleted = false;
         currentWave = waveSO[0];
         AddAdditionalPoints();
         StartCoroutine(StartWave());
@@ -43,7 +44,7 @@ public class EnemyPathScript : MonoBehaviour
             bool uncompletePathExists = Array.Find(enemyPathScripts, 
                 enemyPathScript => enemyPathScript.isAllSpawned == false
                 || enemyPathScript.gameObject.GetComponentsInChildren<EnemyMovement>().Length > 0);
-            //Debug.Log(uncompletePathExists);
+            Debug.Log(uncompletePathExists + " " + (FindAnyObjectByType<PopulationHandler>().GetPopulationCount() > 0));
             if (!uncompletePathExists && FindAnyObjectByType<PopulationHandler>().GetPopulationCount() > 0)
             {
                 StartCoroutine(SuccessfullyEndLevel());

@@ -12,7 +12,7 @@ public class LocalSaveSystem : MonoBehaviour
 {
     private string savePath;
 
-    public static int slotIndex = -1;
+    public static int slotIndex = 0;
     private SaveSlotData currentSlotData;
 
     private void Start()

@@ -13,7 +13,7 @@ public class MaterialCountUI : MonoBehaviour
 
     private Animator textMaterialAnimator;
     AnimatorStateInfo animatorState;
-    public static bool playingAnimation = false;
+    public bool playingAnimation = false;
     private void Awake()
     {
         textView = GetComponentInChildren<TextMeshProUGUI>();

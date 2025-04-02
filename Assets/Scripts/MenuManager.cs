@@ -32,7 +32,7 @@ public class MenuManager : MonoBehaviour
     {
         if (disableOnStart && MenuUI != null) MenuUI.gameObject.SetActive(false);
         if(!disableOnStart) ActiveUI = MenuUI;
-        SetupGameSlotUI();
+        if(GameSlotUI != null)SetupGameSlotUI();
     }
     private void Update()
     {
