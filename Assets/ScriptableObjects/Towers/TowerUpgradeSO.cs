@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "TowerUpgrade", menuName = "TowerUpgradeSO")]
+[CreateAssetMenu(fileName = "TowerUpgrade", menuName = "ScriptableObjects/TowerUpgradeSO")]
 public class TowerUpgradeSO : ScriptableObject 
 {
     [SerializeField] TowerType type;
@@ -28,7 +28,8 @@ public class TowerUpgradeSO : ScriptableObject
 public enum TowerType
 {
     Plain,
-    Basic
+    Basic,
+    Upgrade_1
 }
 [Serializable] //MaterialCount is used to connect a count or cost with a certain BuildMaterial
 public class MaterialCount

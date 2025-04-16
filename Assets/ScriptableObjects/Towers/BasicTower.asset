@@ -12,6 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83a745879841c66459ea2bbdb6c46ccf, type: 3}
   m_Name: BasicTower
   m_EditorClassIdentifier: 
-  type: 0
-  obj: {fileID: 7369347594127714959, guid: 93105182e4d3e4343b570e9b254216ad, type: 3}
-  materialCosts: []
+  type: 1
+  obj: {fileID: 7369347594127714959, guid: 13e5dcf2be1447d458e50bbfd765ffd8, type: 3}
+  materialCosts:
+  - material: 0
+    count: 5
+  - material: 1
+    count: 1

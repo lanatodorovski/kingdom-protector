@@ -131,5 +131,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 3
-  projectileDamadge: 5
+  projectileDamadge: 3
   destroyAfterSeconds: 7

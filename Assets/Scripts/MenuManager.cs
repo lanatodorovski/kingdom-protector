@@ -12,7 +12,7 @@ public class MenuManager : MonoBehaviour
 {
     public static bool isPaused;
 
-    
+
     [SerializeField] Canvas MenuUI;
     [SerializeField] Canvas SettingsUI;
     [SerializeField] Canvas DeathMenuUI;
@@ -31,8 +31,8 @@ public class MenuManager : MonoBehaviour
     private void Start()
     {
         if (disableOnStart && MenuUI != null) MenuUI.gameObject.SetActive(false);
-        if(!disableOnStart) ActiveUI = MenuUI;
-        if(GameSlotUI != null)SetupGameSlotUI();
+        if (!disableOnStart) ActiveUI = MenuUI;
+        if (GameSlotUI != null) SetupGameSlotUI();
     }
     private void Update()
     {
@@ -43,7 +43,7 @@ public class MenuManager : MonoBehaviour
     }
     public void ToggleMenuUI()
     {
-        if(ActiveUI == null)
+        if (ActiveUI == null)
         {
             ActiveUI = MenuUI;
         }
@@ -74,11 +74,13 @@ public class MenuManager : MonoBehaviour
         }
         ToggleUI();
     }
-    public void ToggleUI() {
+    public void ToggleUI()
+    {
         isPaused = !isPaused;
         ActiveUI.gameObject.SetActive(isPaused);
         Time.timeScale = isPaused ? 0f : 1f;
         if (!isPaused) ActiveUI = null;
+        if (SceneManager.GetActiveScene().name == "CastleScene") ToggleTowerInteratction();
     }
     public void SaveAndQuit()
     {
@@ -96,9 +98,12 @@ public class MenuManager : MonoBehaviour
         SceneManager.LoadScene("CastleScene");
         Time.timeScale = 1f;
     }
+
+    [ContextMenu("Reset Level")]
     public void RestartLevel()
     {
-
+        Time.timeScale = 1f;
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
     public void LoadGame()
     {
@@ -124,16 +129,27 @@ public class MenuManager : MonoBehaviour
 
     private void SetupGameSlotUI()
     {
-        Button[] loadButtons = GameSlotUI.GetComponentsInChildren<Button>();        
+        Button[] loadButtons = GameSlotUI.GetComponentsInChildren<Button>();
 
 
         LocalSaveSystem saveSystem = FindAnyObjectByType<LocalSaveSystem>();
-        for(int i = 0; i < 3; i++)
+        for (int i = 0; i < 3; i++)
         {
-            TextMeshProUGUI[] textFields = loadButtons[i].GetComponentsInChildren<TextMeshProUGUI>();            
-            SaveSlotData saveSlot = saveSystem.LoadSave(i);            
+            TextMeshProUGUI[] textFields = loadButtons[i].GetComponentsInChildren<TextMeshProUGUI>();
+            SaveSlotData saveSlot = saveSystem.LoadSave(i);
             textFields[1].text = "Level: " + (saveSlot.level == 0 || saveSlot == null ? "/" : saveSlot.level.ToString());
             textFields[2].text = "Last Saved: " + (saveSlot.GetLastSaved() == DateTime.MinValue || saveSlot == null ? "/" : saveSlot.lastSaved.ToString());
         }
+    }
+
+    private void ToggleTowerInteratction()
+    {
+        GameObject[] towers = GameObject.FindGameObjectsWithTag("Tower");     
+        Array.ForEach(towers, tower => {
+            tower.GetComponent<TowerUpgradeControl>().ToggleUI(false);
+
+            TowerMouseDetector? towerMouseDetector = tower.GetComponent<TowerMouseDetector>();
+            if(towerMouseDetector != null) towerMouseDetector.enabled = !towerMouseDetector.enabled;            
+        });
     }
 }

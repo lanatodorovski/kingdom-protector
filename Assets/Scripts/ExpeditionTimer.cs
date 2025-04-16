@@ -45,7 +45,7 @@ public class ExpeditionTimer : MonoBehaviour
         if (timerText != null) timerText.text = $"{outputMinutes:D2}:{outputSeconds:D2}"; // Formating in 00:00 form
     }
 
-    private void EndExpedition()
+    public void EndExpedition()
     {
         if (timerText != null) timerText.text = "Time has ended";
 

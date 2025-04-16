@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class EnemyPathScript : MonoBehaviour
@@ -12,13 +13,13 @@ public class EnemyPathScript : MonoBehaviour
     [SerializeField] float enemySpawnDelay = 1.0f;
     [SerializeField] float radius;
 
-    [Header("Next Path")]
-    [SerializeField] private GameObject nextPoint = null;
-    private EnemyPathScript switchToPath = null;
+    [Header("Path Connectors")]
+    [SerializeField] private GameObject previousPoint = null;
+    [SerializeField] private GameObject nextPoint = null;    
 
     [Header("Main Path - Level Completion")]
     private static float levelCompletionDelay = 1.0f;
-    public static bool levelCompleted;
+
 
     private WaveConfig currentWave;
     [HideInInspector] public bool isAllSpawned = false;
@@ -31,24 +32,23 @@ public class EnemyPathScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        levelCompleted = false;
-        currentWave = waveSO[0];
+        LevelManager.levelCompleted = false;        
         AddAdditionalPoints();
-        StartCoroutine(StartWave());
+       
     }
 
     private void Update()
     {
-        if (enemyPathScripts != null && !levelCompleted)
+        if (enemyPathScripts != null && !LevelManager.levelCompleted)
         {
             bool uncompletePathExists = Array.Find(enemyPathScripts, 
                 enemyPathScript => enemyPathScript.isAllSpawned == false
                 || enemyPathScript.gameObject.GetComponentsInChildren<EnemyMovement>().Length > 0);
-            Debug.Log(uncompletePathExists + " " + (FindAnyObjectByType<PopulationHandler>().GetPopulationCount() > 0));
+            //Debug.Log(uncompletePathExists + " " + (FindAnyObjectByType<PopulationHandler>().GetPopulationCount() > 0));
             if (!uncompletePathExists && FindAnyObjectByType<PopulationHandler>().GetPopulationCount() > 0)
             {
                 StartCoroutine(SuccessfullyEndLevel());
-                levelCompleted = true;
+                LevelManager.levelCompleted = true;
             }
         }
                     
@@ -96,28 +96,42 @@ public class EnemyPathScript : MonoBehaviour
     {
         return pathPoints.Count;
     }
-    public List<GameObject> GetPointRangeFromPoint(GameObject selectedPoint)
+    public List<GameObject> GetPointRangeFromPoint(GameObject selectedPoint, bool reverseOrder = false)
     {
-        for (int i = 0; i < pathPoints.Count; i++)
-        {
-            GameObject point = pathPoints[i];
-            if(point == selectedPoint)
-            {
+        int index = pathPoints.IndexOf(selectedPoint);
+        if(index > -1) { 
                List<GameObject> result = new List<GameObject>();
-               result.AddRange(pathPoints.GetRange(i, pathPoints.Count - i));
+                result.AddRange(
+                   !reverseOrder?
+                   pathPoints.GetRange(index ,  pathPoints.Count - index ): //From point to the last 
+                   pathPoints.GetRange(0, index + 1) // From start to the point
+                );
                return result;
-            }
+         
         }
         return null;
     }
     private void AddAdditionalPoints()
     {
-        if(nextPoint != null)
+        if (previousPoint != null)
         {
-            switchToPath = nextPoint.transform.parent.GetComponent<EnemyPathScript>();
+            EnemyPathScript switchFromPath = previousPoint.transform.parent.GetComponent<EnemyPathScript>();
+            List<GameObject> addedPoints = switchFromPath.GetPointRangeFromPoint(previousPoint, true);
+            pathPoints.InsertRange(0, addedPoints);
+            //pathPoints.RemoveAt(0);
+        }
+        if (nextPoint != null)
+        {
+            EnemyPathScript switchToPath = nextPoint.transform.parent.GetComponent<EnemyPathScript>();
             List<GameObject> addedPoints = switchToPath.GetPointRangeFromPoint(nextPoint);
             pathPoints.AddRange(addedPoints);
             //Debug.Log(GetPathPointCount());
         }
+    }
+
+    public void SetWavesSo(WaveConfig[] waves) { 
+        this.waveSO = waves;
+        currentWave = waveSO[0];
+        StartCoroutine(StartWave());
     }
 }

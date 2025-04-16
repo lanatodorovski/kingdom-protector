@@ -152,7 +152,7 @@ TextureImporter:
         width: 32
         height: 48
       alignment: 9
-      pivot: {x: 0.51711154, y: 0.08247776}
+      pivot: {x: 0.5171115, y: 0.08247776}
       border: {x: 0, y: 0, z: 0, w: 11}
       outline: []
       physicsShape: []
@@ -160,6 +160,27 @@ TextureImporter:
       bones: []
       spriteID: 23fbdc4942d3a2f4ba81a0e9d8875f82
       internalID: -782220788
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Tower_2
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 0
+        width: 32
+        height: 48
+      alignment: 9
+      pivot: {x: 0.5171115, y: 0.08247776}
+      border: {x: 0, y: 0, z: 0, w: 13}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9bfe3d112c63cfc4594cd0420ac2dcd3
+      internalID: -1953385290
       vertices: []
       indices: 
       edges: []
@@ -177,6 +198,7 @@ TextureImporter:
     nameFileIdTable:
       Tower_0: 511159001
       Tower_1: -782220788
+      Tower_2: -1953385290
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0

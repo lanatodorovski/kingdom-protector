@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "WaveSO", fileName ="New Wawe SO")]
+[CreateAssetMenu(menuName = "ScriptableObjects/WaveSO", fileName ="New Wawe SO")]
 public class WaveConfig : ScriptableObject
 {
     [SerializeField] private List<GameObject> enemies;
