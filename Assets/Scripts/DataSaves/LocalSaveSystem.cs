@@ -71,7 +71,7 @@ public class LocalSaveSystem : MonoBehaviour
     }
     public void SetFieldTowerType()
     {
-        TowerUpgradeControl[] towers = GameObject.FindGameObjectWithTag("Tower").transform.parent.GetComponentsInChildren<TowerUpgradeControl>();
+        TowerUpgradeControl[] towers = TowerUpgradeControl.towers.ToArray();
         foreach (TowerUpgradeControl tower in towers)
         {
             Debug.Log(tower.GetTowerType());
@@ -148,7 +148,7 @@ public class SaveSlotData
     public string lastSaved;
        
 
-    public SaveSlotData(int level = 0, bool hasGathered = false, List<MaterialCount> materialCount = null, List<TowerType> towerType = null, DateTime lastSaved = default(DateTime))
+    public SaveSlotData(int level = 1, bool hasGathered = false, List<MaterialCount> materialCount = null, List<TowerType> towerType = null, DateTime lastSaved = default(DateTime))
     {
         this.level = level;
         this.hasGathered = hasGathered;

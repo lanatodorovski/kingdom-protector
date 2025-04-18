@@ -19,9 +19,3 @@ MonoBehaviour:
   - pathName: Path_1
     wavesSO:
     - {fileID: 11400000, guid: 35020240eb422eb48b9853ffd24d1ca7, type: 2}
-  - pathName: Path_2
-    wavesSO:
-    - {fileID: 11400000, guid: 35020240eb422eb48b9853ffd24d1ca7, type: 2}
-  - pathName: Path_1_1
-    wavesSO:
-    - {fileID: 11400000, guid: 35020240eb422eb48b9853ffd24d1ca7, type: 2}

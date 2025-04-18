@@ -10,13 +10,8 @@ public class LevelInfoConfig : ScriptableObject
 
     public WaveConfig[] GetWavesByPathName(string pathName)
     {
-        foreach (LevelWave levelWave in levelWaves)
-        {
-            levelWave.pathName = pathName;
-            return levelWave.wavesSO;
-        }
-
-        return null;
+        LevelWave levelWave = Array.Find(levelWaves, levelWave => levelWave.pathName == pathName);
+        return levelWave?.wavesSO;       
     }
 }
 

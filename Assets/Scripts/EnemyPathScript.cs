@@ -79,7 +79,7 @@ public class EnemyPathScript : MonoBehaviour
         FindAnyObjectByType<MenuManager>().ToggleLevelCompletionUI();
 
         LocalSaveSystem localSaveSystem = FindAnyObjectByType<LocalSaveSystem>();
-        localSaveSystem.SetHasGathered(false);
+        localSaveSystem.NextLevel();        
         localSaveSystem.SetMaterialCount(FindAnyObjectByType<BuildMaterialCollection>().GetAllAsMaterialCount());
         localSaveSystem.SetFieldTowerType();
         localSaveSystem.SaveGame();
