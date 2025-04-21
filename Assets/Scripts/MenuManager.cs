@@ -17,6 +17,7 @@ public class MenuManager : MonoBehaviour
     [SerializeField] Canvas SettingsUI;
     [SerializeField] Canvas DeathMenuUI;
     [SerializeField] Canvas LevelCompletionUI;
+    [SerializeField] Canvas GameCompletionUI;
     [SerializeField] Canvas GameSlotUI;
     [SerializeField] private bool disableOnStart;
     [SerializeField] private bool canToggleMenu;
@@ -46,7 +47,7 @@ public class MenuManager : MonoBehaviour
         if (ActiveUI == null)
         {
             ActiveUI = MenuUI;
-        }
+        }        
         ToggleUI();
     }
     public void ToggleDeathUI()
@@ -94,22 +95,22 @@ public class MenuManager : MonoBehaviour
         ActiveUI.gameObject.SetActive(true);
     }
     public void NewGame()
-    {
-        SceneManager.LoadScene("CastleScene");
+    {        
+        SceneManager.LoadScene("CastleScene");        
         Time.timeScale = 1f;
     }
 
     [ContextMenu("Reset Level")]
     public void RestartLevel()
     {
-        Time.timeScale = 1f;
+        Time.timeScale = 1f;        
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
     public void LoadGame()
     {
         Time.timeScale = 1f;
         if (FindAnyObjectByType<LocalSaveSystem>().LoadSave().hasGathered)
-        {
+        {            
             SceneManager.LoadScene("CastleScene");
         }
         else
@@ -127,6 +128,19 @@ public class MenuManager : MonoBehaviour
         SceneManager.LoadScene("MainMenu");
     }
 
+    public void ToggleGameCompletionUI()
+    {
+        if (ActiveUI == null)
+        {
+            ActiveUI = GameCompletionUI;
+            canToggleMenu = false;
+        }
+        ToggleUI();
+    }
+    public void OpenProjectUrl()
+    {
+        Application.OpenURL("https://github.com/lanatodorovski/kingdom-protector");
+    }
     private void SetupGameSlotUI()
     {
         Button[] loadButtons = GameSlotUI.GetComponentsInChildren<Button>();
@@ -147,7 +161,7 @@ public class MenuManager : MonoBehaviour
         GameObject[] towers = GameObject.FindGameObjectsWithTag("Tower");     
         Array.ForEach(towers, tower => {
             tower.GetComponent<TowerUpgradeControl>().ToggleUI(false);
-
+            
             TowerMouseDetector? towerMouseDetector = tower.GetComponent<TowerMouseDetector>();
             if(towerMouseDetector != null) towerMouseDetector.enabled = !towerMouseDetector.enabled;            
         });

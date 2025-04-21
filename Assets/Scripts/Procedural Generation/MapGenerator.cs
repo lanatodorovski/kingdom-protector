@@ -48,7 +48,7 @@ public class MapGenerator : MonoBehaviour
     }
     public void GenerateMap()
     {
-        if (randomiseSeed) seed = UnityEngine.Random.RandomRange(-100000, 100000);
+        if (randomiseSeed) seed = UnityEngine.Random.Range(-100000, 100000);
         float[,] noiseMap = Noise.GenerateNoiseMap(mapWidth, mapHeight, seed, noiseScale, octaves, persistance, lacunarity, offset) ;
 
 

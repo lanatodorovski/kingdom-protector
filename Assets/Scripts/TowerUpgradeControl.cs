@@ -7,25 +7,20 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 public class TowerUpgradeControl : MonoBehaviour
 {
-    public static List<TowerUpgradeControl> towers = new List<TowerUpgradeControl>();
-
+    public static List<TowerUpgradeControl> towerScripts = new List<TowerUpgradeControl>();        
     [SerializeField] TowerType towerType = TowerType.Plain;
     [SerializeField] GameObject[] UIGameObjects;
     [SerializeField] bool deactivateOnStart = true;
-
-    BuildMaterialCollection buildMaterialCollection;
-    TowerUpgradeCollection towerUpgrades;
+   
+    TowerUpgradeCollection towerUpgrades;    
     
     private void Awake()
-    {
-        buildMaterialCollection = GetComponent<BuildMaterialCollection>();
+    {   
         towerUpgrades = GameObject.FindObjectOfType<TowerUpgradeCollection>();  
-    }
+    }       
     private void Start()
-    {
+    {       
         if (deactivateOnStart) ToggleUI(false);
-        if (towers.Contains(this) == false)
-            towers.Add(this);
 
     }
     public void ToggleUI(bool toggle)
@@ -43,7 +38,6 @@ public class TowerUpgradeControl : MonoBehaviour
             bool canBuy = towerUpgrades.CanBuyUpgrade(upgrade);
             if (canBuy == false)
             {
-                //FailUpdate();
                 return;
             }
             towerUpgrades.BuyUpgrade(upgrade);
@@ -53,7 +47,11 @@ public class TowerUpgradeControl : MonoBehaviour
         upgradedTower.transform.localPosition = gameObject.transform.localPosition;
         upgradedTower.transform.localRotation = gameObject.transform.localRotation;
         upgradedTower.transform.localScale = gameObject.transform.localScale;
-        upgradedTower.transform.SetSiblingIndex(gameObject.transform.GetSiblingIndex());       
+        upgradedTower.transform.SetSiblingIndex(gameObject.transform.GetSiblingIndex());   
+
+        int thisGOindex = towerScripts.IndexOf(this);
+        towerScripts[thisGOindex] = upgradedTower.GetComponent<TowerUpgradeControl>();
+
         Destroy(gameObject);
     }
     public void SetUpgrade(TowerUpgradeButton button)
@@ -65,9 +63,12 @@ public class TowerUpgradeControl : MonoBehaviour
     {
         return towerType;
     }
-    //private void FailUpdate()
-    //{
-
-    //}
+    public static void SetTowerScripts()
+    {
+        towerScripts.Clear();
+        towerScripts.AddRange(
+            GameObject.FindGameObjectWithTag("Tower").transform.parent.GetComponentsInChildren<TowerUpgradeControl>()
+        );
+    }    
 
 }

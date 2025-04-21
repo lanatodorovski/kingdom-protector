@@ -1,15 +1,16 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour
 {
-    [SerializeField] private LevelDetails[] levelDetails;
+    [SerializeField] private LevelConstruction[] levelConstructions;
     [SerializeField] private LevelDesign[] levelDesigns;
     [SerializeField] private GameObject pathsContainer;
 
-    private LevelDetails currentLevel;
+    private LevelConstruction currentLevel;
     private LevelDesign currentDesign;
 
 
@@ -23,7 +24,7 @@ public class LevelManager : MonoBehaviour
     }
     private void Start()
     {
-        GetLocalSaveLevel();
+        if(!GetLocalSaveLevel())return;
 
         SetWavesToPaths();
         DeactivateUnneededFields();
@@ -50,6 +51,8 @@ public class LevelManager : MonoBehaviour
 
     private void DeactivateUnneededFields()
     {
+        TowerUpgradeControl.SetTowerScripts();
+        
         GameObject[] deactivatedFields = currentDesign.GetDeactivatedFields();
         if(deactivatedFields != null && deactivatedFields.Length != 0)
         {
@@ -64,15 +67,47 @@ public class LevelManager : MonoBehaviour
         currentDesign.GetLevelMap().SetActive(true);
     }
 
-    private void GetLocalSaveLevel()
+    private bool GetLocalSaveLevel()
     {
         level = saveSystem.LoadSave().level;
-        currentLevel = levelDetails[level - 1];
+        if (level > levelConstructions.Length)
+        {
+            Debug.Log(level + " " + levelConstructions.Length);
+            FindAnyObjectByType<MenuManager>().ToggleGameCompletionUI();
+            return false;
+        }
+
+        currentLevel = levelConstructions[level - 1];
         currentDesign = levelDesigns[currentLevel.GetLevelDesignId()];
+        return true;
+    }
+    public IEnumerator SuccessfullyEndLevel(float levelCompletionDelay)
+    {    
+
+        LocalSaveSystem localSaveSystem = FindAnyObjectByType<LocalSaveSystem>();
+
+        yield return new WaitForSecondsRealtime(levelCompletionDelay);
+        if (level <= levelConstructions.Length)
+        {
+            FindAnyObjectByType<MenuManager>().ToggleLevelCompletionUI();
+            localSaveSystem.SetHasGathered(false);
+        }
+        else
+        {
+            FindAnyObjectByType<MenuManager>().ToggleGameCompletionUI();
+        }
+        localSaveSystem.NextLevel();
+        level++;        
+        localSaveSystem.SetMaterialCount(FindAnyObjectByType<BuildMaterialCollection>().GetAllAsMaterialCount());
+        localSaveSystem.SetFieldTowerType();
+        localSaveSystem.SaveGame();
+
+
+
     }
 }
 [Serializable]
-public class LevelDetails
+public class LevelConstruction
 {
 
     [SerializeField] private LevelInfoConfig levelWaves;

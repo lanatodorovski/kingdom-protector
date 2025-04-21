@@ -47,7 +47,8 @@ public class EnemyPathScript : MonoBehaviour
             //Debug.Log(uncompletePathExists + " " + (FindAnyObjectByType<PopulationHandler>().GetPopulationCount() > 0));
             if (!uncompletePathExists && FindAnyObjectByType<PopulationHandler>().GetPopulationCount() > 0)
             {
-                StartCoroutine(SuccessfullyEndLevel());
+
+                StartCoroutine(FindAnyObjectByType<LevelManager>().SuccessfullyEndLevel(levelCompletionDelay));
                 LevelManager.levelCompleted = true;
             }
         }
@@ -73,17 +74,7 @@ public class EnemyPathScript : MonoBehaviour
         Debug.Log("ALL ENEMIES SPAWNED");
         isAllSpawned = true;
     }
-    IEnumerator SuccessfullyEndLevel()
-    {
-        yield return new WaitForSecondsRealtime(levelCompletionDelay);
-        FindAnyObjectByType<MenuManager>().ToggleLevelCompletionUI();
 
-        LocalSaveSystem localSaveSystem = FindAnyObjectByType<LocalSaveSystem>();
-        localSaveSystem.NextLevel();        
-        localSaveSystem.SetMaterialCount(FindAnyObjectByType<BuildMaterialCollection>().GetAllAsMaterialCount());
-        localSaveSystem.SetFieldTowerType();
-        localSaveSystem.SaveGame();
-    }
     public GameObject GetPathPointAt(int index)
     {
         return pathPoints[index];

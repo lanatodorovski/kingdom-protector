@@ -16,8 +16,8 @@ public class LocalSaveSystem : MonoBehaviour
     private SaveSlotData currentSlotData;
 
     private void Start()
-    {
-        if(SceneManager.GetActiveScene().name != "MainMenu") currentSlotData = LoadSave();
+    {        
+        if (SceneManager.GetActiveScene().name != "MainMenu") currentSlotData = LoadSave();
         if(SceneManager.GetActiveScene().name == "CastleScene") LoadFieldTowerType();
     }
     private void Awake()
@@ -39,8 +39,7 @@ public class LocalSaveSystem : MonoBehaviour
     
     public void NextLevel()
     {        
-        currentSlotData.level++;
-        currentSlotData.hasGathered = false;        
+        currentSlotData.level++;      
     }
     public void SetHasGathered(bool hasGathered)
     {        
@@ -71,35 +70,36 @@ public class LocalSaveSystem : MonoBehaviour
     }
     public void SetFieldTowerType()
     {
-        TowerUpgradeControl[] towers = TowerUpgradeControl.towers.ToArray();
+        TowerUpgradeControl[] towers = TowerUpgradeControl.towerScripts.ToArray();
         foreach (TowerUpgradeControl tower in towers)
         {
             Debug.Log(tower.GetTowerType());
         }
         if (towers.Length != 0) {
             currentSlotData.fieldTowerType = Array.ConvertAll(towers, tower => tower.GetTowerType()).ToList();
-        }        
+        }
+        TowerUpgradeControl.towerScripts.Clear();
 
     }
     public void LoadFieldTowerType()
     {
-        TowerUpgradeControl[]? towers = GameObject.FindGameObjectWithTag("Tower").transform.parent.GetComponentsInChildren<TowerUpgradeControl>();
-        if (towers == null) return;
+        if (currentSlotData.fieldTowerType == null || currentSlotData.fieldTowerType.Count == 0) return;
         for(int i = 0; i < currentSlotData.fieldTowerType.Count(); i++)
         {
-            TowerUpgradeControl towerUpgrade = towers[i];
-            Debug.Log(currentSlotData.fieldTowerType[i]);
+            Debug.Log(TowerUpgradeControl.towerScripts.Count);
+            TowerUpgradeControl towerUpgrade = TowerUpgradeControl.towerScripts[i];
+            Debug.Log(currentSlotData.fieldTowerType[i] + " " + towerUpgrade.GetTowerType());
             if(towerUpgrade.GetTowerType() != currentSlotData.fieldTowerType[i])
             {
-                towerUpgrade.SetUpgrade(currentSlotData.fieldTowerType[i], false);
-            }
-           
+                towerUpgrade.SetUpgrade(currentSlotData.fieldTowerType[i], false);                
+            }           
         }
+        //TowerUpgradeControl.initDone = true;
     }
     public SaveSlotData LoadSave(int certainSlotIndex = -1)
     {
         SaveDataWrapper saveSlots = LoadAllSaves();
-        int index = (certainSlotIndex > -1) ? certainSlotIndex : slotIndex;
+        int index = (certainSlotIndex > -1) ? certainSlotIndex : slotIndex;    
         return saveSlots.data[index];
     }
 
