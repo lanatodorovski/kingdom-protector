@@ -151,7 +151,18 @@ public class MenuManager : MonoBehaviour
         {
             TextMeshProUGUI[] textFields = loadButtons[i].GetComponentsInChildren<TextMeshProUGUI>();
             SaveSlotData saveSlot = saveSystem.LoadSave(i);
-            textFields[1].text = "Level: " + (saveSlot.level == 0 || saveSlot == null ? "/" : saveSlot.level.ToString());
+            textFields[1].text = "Level: ";
+            
+            if(saveSlot.level == 1 && !saveSlot.hasGathered || saveSlot == null)
+            {
+                textFields[1].text += "/";
+            }
+            else
+            {
+                textFields[1].text += saveSlot.level.ToString();
+                textFields[1].text += saveSlot.hasGathered ? " - defend" : " - expedition";
+            }
+                                
             textFields[2].text = "Last Saved: " + (saveSlot.GetLastSaved() == DateTime.MinValue || saveSlot == null ? "/" : saveSlot.lastSaved.ToString());
         }
     }

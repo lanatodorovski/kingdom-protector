@@ -24,10 +24,16 @@ public class LevelManager : MonoBehaviour
     }
     private void Start()
     {
-        if(!GetLocalSaveLevel())return;
+        bool lastLevel = !GetLocalSaveLevel();
 
-        SetWavesToPaths();
-        DeactivateUnneededFields();
+        int levelIndex = level - 1;
+        if (lastLevel) levelIndex--;
+        currentLevel = levelConstructions[levelIndex];
+        currentDesign = levelDesigns[currentLevel.GetLevelDesignId()];       
+        HandleTowers();
+
+        if (lastLevel) return;
+        SetWavesToPaths();        
         SetMapDesign();
     }
     private void SetWavesToPaths()
@@ -49,7 +55,7 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    private void DeactivateUnneededFields()
+    private void HandleTowers()
     {
         TowerUpgradeControl.SetTowerScripts();
         
@@ -72,13 +78,10 @@ public class LevelManager : MonoBehaviour
         level = saveSystem.LoadSave().level;
         if (level > levelConstructions.Length)
         {
-            Debug.Log(level + " " + levelConstructions.Length);
+            Debug.Log(level + " " + levelConstructions.Length);            
             FindAnyObjectByType<MenuManager>().ToggleGameCompletionUI();
             return false;
         }
-
-        currentLevel = levelConstructions[level - 1];
-        currentDesign = levelDesigns[currentLevel.GetLevelDesignId()];
         return true;
     }
     public IEnumerator SuccessfullyEndLevel(float levelCompletionDelay)
@@ -87,17 +90,17 @@ public class LevelManager : MonoBehaviour
         LocalSaveSystem localSaveSystem = FindAnyObjectByType<LocalSaveSystem>();
 
         yield return new WaitForSecondsRealtime(levelCompletionDelay);
+        localSaveSystem.NextLevel();
+        level++;
         if (level <= levelConstructions.Length)
         {
             FindAnyObjectByType<MenuManager>().ToggleLevelCompletionUI();
-            localSaveSystem.SetHasGathered(false);
+            localSaveSystem.SetHasGathered(false);            
         }
         else
         {
             FindAnyObjectByType<MenuManager>().ToggleGameCompletionUI();
-        }
-        localSaveSystem.NextLevel();
-        level++;        
+        }   
         localSaveSystem.SetMaterialCount(FindAnyObjectByType<BuildMaterialCollection>().GetAllAsMaterialCount());
         localSaveSystem.SetFieldTowerType();
         localSaveSystem.SaveGame();
