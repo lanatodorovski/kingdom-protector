@@ -7,6 +7,7 @@ public class NeededMaterialsUI : MonoBehaviour
 
     [SerializeField] private GameObject materialCountPrefab;
     [SerializeField] private GameObject notEnoughMaterialCountPrefab;
+    [SerializeField] private GameObject materialReturnPrefab;
 
     TowerUpgradeCollection towerUpgrades;
     private BuildMaterialCollection buildMaterialCollection;
@@ -31,6 +32,25 @@ public class NeededMaterialsUI : MonoBehaviour
 
                 MaterialCountUI materialCountUI = materialCountInstance.GetComponent<MaterialCountUI>();
                 materialCountUI.SetMaterial(materialUse.GetBuildMaterialSO().GetSprite(), material.GetCount());
+            }
+        }
+    }
+    public void ShowReturnedMaterialsUI(TowerType towerDestroyed)
+    {
+        if(gameObject.transform.childCount == 0)
+        {
+            MaterialCount[] materialCost = towerUpgrades.FindTowerByType(towerDestroyed).GetMaterialCosts();
+            foreach (MaterialCount material in materialCost)
+            {
+                BuildMaterial buildMaterial = material.GetBuildMaterial();
+                MaterialUse materialUse = buildMaterialCollection.GetMaterialUse(buildMaterial);
+
+                GameObject materialCountInstance = Instantiate(materialReturnPrefab, gameObject.transform);
+                   
+
+                MaterialCountUI materialCountUI = materialCountInstance.GetComponent<MaterialCountUI>();
+                materialCountUI.SetMaterial(materialUse);
+                materialCountUI.SetCountUI(material.GetCount(), "+");
             }
         }
     }

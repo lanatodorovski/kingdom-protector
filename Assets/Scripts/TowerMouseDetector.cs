@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -11,9 +12,11 @@ public class TowerMouseDetector : MonoBehaviour
 
     void Awake()
     {
-        mainCamera = Camera.main;
+        mainCamera = Camera.main;       
+    }
+    private void Start()
+    {
         FindControl();
-
     }
 
     void Update()
@@ -34,13 +37,13 @@ public class TowerMouseDetector : MonoBehaviour
             if (control != null) control.ToggleUI(false);
         }
     }
-
     private void FindControl()
     {
-        //Debug.Log("detect click");
-        control = gameObject.transform.parent.GetComponent<TowerUpgradeControl>();
-
-        if (control == null)
+        //Debug.Log("detect click" + gameObject.name);
+        if (gameObject.transform.parent.tag == "Tower")
+        {
+            control = gameObject.transform.parent.GetComponent<TowerUpgradeControl>() ;
+        }else
         {
             control = gameObject.GetComponent<TowerUpgradeControl>();
         }

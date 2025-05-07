@@ -10,71 +10,38 @@ using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour
 {
-    public static bool isPaused;
-
-
-    [SerializeField] Canvas MenuUI;
-    [SerializeField] Canvas SettingsUI;
-    [SerializeField] Canvas DeathMenuUI;
-    [SerializeField] Canvas LevelCompletionUI;
-    [SerializeField] Canvas GameCompletionUI;
-    [SerializeField] Canvas GameSlotUI;
-    [SerializeField] private bool disableOnStart;
+    public static bool isPaused = false;
+    
     [SerializeField] private bool canToggleMenu;
 
-
-    private Canvas ActiveUI;
+    [SerializeField] private Canvas[] controllUI;
+    private Canvas ActiveUI = null;
+    private Stack<Canvas> previousUIs;
 
     private void Awake()
-    {
-        isPaused = !disableOnStart;
+    {       
+        previousUIs = new Stack<Canvas>();
     }
     private void Start()
     {
-        if (disableOnStart && MenuUI != null) MenuUI.gameObject.SetActive(false);
-        if (!disableOnStart) ActiveUI = MenuUI;
-        if (GameSlotUI != null) SetupGameSlotUI();
+        if (SceneManager.GetActiveScene().name == "MainMenu") {
+            ActiveUI = GetCanvas("MainMenuUI");
+            isPaused = true;
+
+            Canvas GameSlotUI = GetCanvas("SaveSlotsUI");
+            if (GameSlotUI != null) SetupGameSlotUI(GameSlotUI);
+        }
+        
     }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape) && canToggleMenu)
         {
-            ToggleMenuUI();
+            ToggleCanvas("PauseMenuUI");
         }
-    }
-    public void ToggleMenuUI()
-    {
-        if (ActiveUI == null)
-        {
-            ActiveUI = MenuUI;
-        }        
-        ToggleUI();
-    }
-    public void ToggleDeathUI()
-    {
-        if (ActiveUI == null)
-        {
-            ActiveUI = DeathMenuUI;
-            canToggleMenu = false;
-        }
-        ToggleUI();
-    }
-    public void ToggleGameSlotUI()
-    {
-        ActiveUI.gameObject.SetActive(false);
-        ActiveUI = ActiveUI == GameSlotUI ? MenuUI : GameSlotUI;
-        ActiveUI.gameObject.SetActive(true);
     }
 
-    public void ToggleLevelCompletionUI()
-    {
-        if (ActiveUI == null)
-        {
-            ActiveUI = LevelCompletionUI;
-            canToggleMenu = false;
-        }
-        ToggleUI();
-    }
+    //CANVAS FUNCTIONS
     public void ToggleUI()
     {
         isPaused = !isPaused;
@@ -83,34 +50,72 @@ public class MenuManager : MonoBehaviour
         if (!isPaused) ActiveUI = null;
         if (SceneManager.GetActiveScene().name == "CastleScene") ToggleTowerInteratction();
     }
-    public void SaveAndQuit()
+
+
+    public Canvas GetCanvas(string canvasName)
     {
-        //MAKE A FUNCTONALITY TO SAVE LOCALY HERE
+        return Array.Find(controllUI, canvas => canvas.gameObject.name == canvasName);
+    }
+    public void ToggleCanvas(string canvasName)
+    {
+        Canvas canvas = GetCanvas(canvasName);
+        ToggleCanvas(canvas);                
+    }
+    public void ToggleCanvas(string canvasName, bool canToggleMenu)
+    {
+        ToggleCanvas(canvasName);
+        this.canToggleMenu = canToggleMenu;
+    }
+
+    public void ToggleCanvas(Canvas toggleCanvas)
+    {
+        if (ActiveUI == null)
+        {
+            ActiveUI = toggleCanvas;            
+        }
+        ToggleUI();
+    }
+    public void SetCanToggleMenu(bool canToggleMenu)
+    {
+        this.canToggleMenu = canToggleMenu;
+    }
+
+    public void SetPreviousUI(Canvas canvas)
+    {        
+        previousUIs.Push(canvas);
+        ToggleUI();
+    }
+    public void TogglePreviousCanvas()
+    {
+        if(previousUIs.Count > 0)
+        {
+            ToggleCanvas(previousUIs.Pop());
+        }
+    }
+
+    //SCENE AND APLICATION FUNCTIONS    
+    public void SaveAndQuit()
+    {        
         Application.Quit();
     }
-    public void ToggleSettingsUI()
-    {
-        ActiveUI.gameObject.SetActive(false);
-        ActiveUI = ActiveUI == SettingsUI ? MenuUI : SettingsUI;
-        ActiveUI.gameObject.SetActive(true);
-    }
+
     public void NewGame()
-    {        
-        SceneManager.LoadScene("CastleScene");        
+    {
+        SceneManager.LoadScene("CastleScene");
         Time.timeScale = 1f;
     }
 
     [ContextMenu("Reset Level")]
     public void RestartLevel()
     {
-        Time.timeScale = 1f;        
+        Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
     public void LoadGame()
     {
         Time.timeScale = 1f;
         if (FindAnyObjectByType<LocalSaveSystem>().LoadSave().hasGathered)
-        {            
+        {
             SceneManager.LoadScene("CastleScene");
         }
         else
@@ -127,22 +132,14 @@ public class MenuManager : MonoBehaviour
     {
         SceneManager.LoadScene("MainMenu");
     }
-
-    public void ToggleGameCompletionUI()
-    {
-        if (ActiveUI == null)
-        {
-            ActiveUI = GameCompletionUI;
-            canToggleMenu = false;
-        }
-        ToggleUI();
-    }
     public void OpenProjectUrl()
     {
         Application.OpenURL("https://github.com/lanatodorovski/kingdom-protector");
     }
-    private void SetupGameSlotUI()
-    {
+
+    //SETUPS
+    private void SetupGameSlotUI(Canvas GameSlotUI)
+    {        
         Button[] loadButtons = GameSlotUI.GetComponentsInChildren<Button>();
 
 

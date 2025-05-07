@@ -12,6 +12,6 @@ public class WaveConfig : ScriptableObject
     }
     public GameObject GetEnemyAt(int index)
     {
-        return enemies[0];
+        return enemies[index];
     }
 }

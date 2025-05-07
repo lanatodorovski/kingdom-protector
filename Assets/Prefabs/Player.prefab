@@ -135,7 +135,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackArea: {fileID: 9212215146399679516}
-  timeToAttack: 0.5
+  timeToAttack: 0.25
+  cooldownTime: 0.4
 --- !u!114 &9212215148148780835
 MonoBehaviour:
   m_ObjectHideFlags: 0

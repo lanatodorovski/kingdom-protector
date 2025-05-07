@@ -17,5 +17,3 @@ MonoBehaviour:
   materialCosts:
   - material: 0
     count: 5
-  - material: 1
-    count: 1

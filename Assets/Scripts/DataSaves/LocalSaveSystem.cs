@@ -86,21 +86,25 @@ public class LocalSaveSystem : MonoBehaviour
         if (currentSlotData.fieldTowerType == null || currentSlotData.fieldTowerType.Count == 0) return;
         for(int i = 0; i < currentSlotData.fieldTowerType.Count(); i++)
         {
-            Debug.Log(TowerUpgradeControl.towerScripts.Count);
+            //Debug.Log(TowerUpgradeControl.towerScripts.Count);
             TowerUpgradeControl towerUpgrade = TowerUpgradeControl.towerScripts[i];
-            Debug.Log(currentSlotData.fieldTowerType[i] + " " + towerUpgrade.GetTowerType());
+            //Debug.Log(currentSlotData.fieldTowerType[i] + " " + towerUpgrade.GetTowerType());
             if(towerUpgrade.GetTowerType() != currentSlotData.fieldTowerType[i])
             {
-                towerUpgrade.SetUpgrade(currentSlotData.fieldTowerType[i], false);                
+                towerUpgrade.SetUpgrade(currentSlotData.fieldTowerType[i]);                
             }           
         }
         //TowerUpgradeControl.initDone = true;
     }
-    public SaveSlotData LoadSave(int certainSlotIndex = -1)
+    public SaveSlotData LoadSave(int certainSlotIndex)
     {
         SaveDataWrapper saveSlots = LoadAllSaves();
-        int index = (certainSlotIndex > -1) ? certainSlotIndex : slotIndex;    
+        int index = certainSlotIndex;
         return saveSlots.data[index];
+    }
+    public SaveSlotData LoadSave()
+    {
+        return LoadSave(slotIndex);
     }
 
     private SaveDataWrapper LoadAllSaves()
@@ -145,15 +149,17 @@ public class SaveSlotData
     public bool hasGathered;
     public List<MaterialCount> materialCount;
     public List<TowerType> fieldTowerType;
+    public int populationDeduction;
     public string lastSaved;
        
 
-    public SaveSlotData(int level = 1, bool hasGathered = false, List<MaterialCount> materialCount = null, List<TowerType> towerType = null, DateTime lastSaved = default(DateTime))
+    public SaveSlotData(int level = 1, bool hasGathered = false, List<MaterialCount> materialCount = null, List<TowerType> towerType = null, int populationDeduction = 0, DateTime lastSaved = default(DateTime))
     {
         this.level = level;
         this.hasGathered = hasGathered;
         this.materialCount = materialCount == null ? new List<MaterialCount>() : materialCount;
         this.fieldTowerType = towerType;
+        this.populationDeduction = populationDeduction;
         this.lastSaved = lastSaved.ToString("yyyy-MM-dd HH:mm:ss");
     }
     public void SetLastSaved(DateTime date)

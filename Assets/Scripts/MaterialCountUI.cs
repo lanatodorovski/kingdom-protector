@@ -41,7 +41,7 @@ public class MaterialCountUI : MonoBehaviour
     }
 
     public void SetMaterial(MaterialUse material)
-    {
+    {        
         SetMaterial(material.GetBuildMaterialSO().GetSprite(), material.GetCount());
     }
     public void SetMaterial(Sprite materialSprite, int count = 0)
@@ -51,9 +51,9 @@ public class MaterialCountUI : MonoBehaviour
         SetCountUI(count);
     }
 
-    public void SetCountUI(int count)
+    public void SetCountUI(int count, string additionalText = "")
     {
-        textView.text = count.ToString();
+        textView.text = additionalText + count.ToString();
     }
 
     public void ShowAddedMaterial(int materialCount)

@@ -16,6 +16,6 @@ MonoBehaviour:
   obj: {fileID: 4373533595011946493, guid: 83e672fbc82003c428292bfc1c8bf380, type: 3}
   materialCosts:
   - material: 0
-    count: 15
+    count: 10
   - material: 1
     count: 5

@@ -7,8 +7,10 @@ public class PlayerCombat : MonoBehaviour
 {
     [SerializeField] private GameObject attackArea;
     [SerializeField] private float timeToAttack = 0.25f;
+    [SerializeField] private float cooldownTime = 0.25f;
  
     private bool isAttacking  = false;
+    private bool isCooled = true;
     private CharacterAnimationHandler animationHandler;
 
     private void Awake()
@@ -18,7 +20,10 @@ public class PlayerCombat : MonoBehaviour
     }
     private void OnFire()
     {
-        Fire();
+        if (isCooled)
+        {
+            Fire();
+        }
     }
     void Fire()
     {
@@ -40,6 +45,14 @@ public class PlayerCombat : MonoBehaviour
     {
         yield return new WaitForSeconds(timeToAttack);
         SetAttack(false);
+        StartCoroutine(CooldownPeriod());
+    }
+
+    private IEnumerator CooldownPeriod()
+    {
+        isCooled = false;
+        yield return new WaitForSeconds(cooldownTime);
+        isCooled = true;
     }
 
     //private void Animate()

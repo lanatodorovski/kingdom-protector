@@ -67,7 +67,7 @@ public class EnemyPathScript : MonoBehaviour
     {
         for (int i = 0; i < currentWave.GetEnemiesLength(); i++)
         {
-            GameObject enemy= Instantiate(currentWave.GetEnemyAt(i), spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Length)].transform);
+            GameObject enemy= Instantiate(currentWave.GetEnemyAt(i), spawnPoints[UnityEngine.Random.Range(0, spawnPoints.Length)].transform);           
             enemy.GetComponent<EnemyMovement>().SetPath(this);
             yield return new WaitForSeconds(enemySpawnDelay);
         }

@@ -11,9 +11,18 @@ public class PopulationHandler : MonoBehaviour
 {
     [SerializeField] private int population;
     [SerializeField] private TextMeshProUGUI populationText;
+    private static int populationDeduction = 0;
 
+    LocalSaveSystem saveSystem;
+
+    private void Awake()
+    {
+        saveSystem = FindAnyObjectByType<LocalSaveSystem>();
+    }
     private void Start()
     {
+        populationDeduction = saveSystem.LoadSave().populationDeduction;
+        population -= populationDeduction;
         SetPopulationText();
     }
     public void RemovePopulation(int remove)
@@ -21,7 +30,7 @@ public class PopulationHandler : MonoBehaviour
         population -= remove;
         if(population <= 0)
         {
-            FindAnyObjectByType<MenuManager>().ToggleDeathUI();
+            FindAnyObjectByType<MenuManager>().ToggleCanvas("DeathMenuUI", false);
             population = 0;
         }
         SetPopulationText();        
@@ -41,6 +50,13 @@ public class PopulationHandler : MonoBehaviour
     public int GetPopulationCount()
     {
         return population;
+    }
+
+    public void AddPopulationDeduction(int deduct)
+    {
+        populationDeduction += deduct;   
+        saveSystem.LoadSave().populationDeduction = populationDeduction;
+        saveSystem.SaveGame();
     }
 
 

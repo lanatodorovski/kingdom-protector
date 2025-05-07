@@ -31,18 +31,26 @@ public class TowerUpgradeControl : MonoBehaviour
         }
     }
     
-    public void SetUpgrade(TowerType upgrade, bool checkForCost = true)
+    public void SetUpgrade(TowerType upgrade, UpgradeMode upgradeMode = UpgradeMode.None)
     {        
-        if (checkForCost)
+        if (upgradeMode != UpgradeMode.None)
         {
-            bool canBuy = towerUpgrades.CanBuyUpgrade(upgrade);
-            if (canBuy == false)
+            if (upgradeMode == UpgradeMode.Return)
             {
-                return;
+                towerUpgrades.BuyUpgrade(upgrade, true);
+                upgrade = TowerType.Plain;
             }
-            towerUpgrades.BuyUpgrade(upgrade);
-        }
-        GameObject upgradedTower = Instantiate(towerUpgrades.FindTowerByType(upgrade).GetTowerGameObject());
+            else
+            {
+                bool canBuy = towerUpgrades.CanBuyUpgrade(upgrade);
+                if (canBuy == false)
+                {
+                    return;
+                }
+                towerUpgrades.BuyUpgrade(upgrade);
+            }
+        }        
+        GameObject upgradedTower = Instantiate(towerUpgrades.FindTowerByType(upgrade).GetTowerGameObject()) ;
         upgradedTower.transform.parent = gameObject.transform.parent;
         upgradedTower.transform.localPosition = gameObject.transform.localPosition;
         upgradedTower.transform.localRotation = gameObject.transform.localRotation;
@@ -56,7 +64,11 @@ public class TowerUpgradeControl : MonoBehaviour
     }
     public void SetUpgrade(TowerUpgradeButton button)
     {
-        SetUpgrade(button.towerUpgrade);
+        SetUpgrade(button.towerUpgrade, UpgradeMode.Buy);
+    }
+    public void SetUpgradeAndReturnMaterials(TowerUpgradeButton button)
+    {
+        SetUpgrade(button.towerUpgrade, UpgradeMode.Return);
     }
 
     public TowerType GetTowerType()
@@ -70,5 +82,10 @@ public class TowerUpgradeControl : MonoBehaviour
             GameObject.FindGameObjectWithTag("Tower").transform.parent.GetComponentsInChildren<TowerUpgradeControl>()
         );
     }    
-
+    public enum UpgradeMode
+    {
+        Buy,
+        Return,
+        None
+    }
 }

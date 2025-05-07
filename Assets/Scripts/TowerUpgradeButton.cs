@@ -29,5 +29,8 @@ public class TowerUpgradeButton : MonoBehaviour
     {
         neededMaterialsDisplay.ShowCostMaterialsUI(towerUpgrade);
     }
-
+    public void ShowReturnedMaterialsUI()
+    {
+        neededMaterialsDisplay.ShowReturnedMaterialsUI(towerUpgrade);        
+    }
 }

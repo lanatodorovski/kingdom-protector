@@ -42,13 +42,20 @@ public class TowerUpgradeCollection : MonoBehaviour
         }
         return true;
     }
-    public void BuyUpgrade(TowerType upgrade)
+    public void BuyUpgrade(TowerType upgrade, bool returnMaterials = false)
     {
         TowerUpgradeSO towerUpgrade = FindTowerByType(upgrade);
         foreach (MaterialCount costMaterial in towerUpgrade.GetMaterialCosts())
         {
             MaterialUse materialCount = buildMaterialCollection.GetMaterialUse(costMaterial.GetBuildMaterial());
-            materialCount.TakeAwayCount(costMaterial.GetCount());
+            if (!returnMaterials)
+            {
+                materialCount.TakeAwayCount(costMaterial.GetCount());
+            }
+            else
+            {
+                materialCount.AddCount(costMaterial.GetCount());
+            }
         }
     }    
 

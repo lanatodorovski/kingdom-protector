@@ -49,7 +49,7 @@ public class ExpeditionTimer : MonoBehaviour
     {
         if (timerText != null) timerText.text = "Time has ended";
 
-        FindAnyObjectByType<MenuManager>().ToggleLevelCompletionUI();
+        FindAnyObjectByType<MenuManager>().ToggleCanvas("LevelCompletionUI", false);
         List<MaterialCount> materialCounts = FindAnyObjectByType<BuildMaterialCollection>().GetAllAsMaterialCount();
 
         LocalSaveSystem localSaveSystem = FindAnyObjectByType<LocalSaveSystem>();

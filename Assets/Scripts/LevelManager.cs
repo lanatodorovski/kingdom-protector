@@ -5,11 +5,11 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 public class LevelManager : MonoBehaviour
-{
+{    
     [SerializeField] private LevelConstruction[] levelConstructions;
     [SerializeField] private LevelDesign[] levelDesigns;
     [SerializeField] private GameObject pathsContainer;
-
+    [SerializeField] private int forceLevel = 0; 
     private LevelConstruction currentLevel;
     private LevelDesign currentDesign;
 
@@ -24,15 +24,25 @@ public class LevelManager : MonoBehaviour
     }
     private void Start()
     {
-        bool lastLevel = !GetLocalSaveLevel();
+        bool finished = false;
+        if (forceLevel == 0)
+        {
+            finished = !GetLocalSaveLevel();
+        }
+        else
+        {
+            level = forceLevel;
+            if (forceLevel > levelConstructions.Length) finished = true;
+        }
+        
 
         int levelIndex = level - 1;
-        if (lastLevel) levelIndex--;
+        if (finished) levelIndex--;
         currentLevel = levelConstructions[levelIndex];
         currentDesign = levelDesigns[currentLevel.GetLevelDesignId()];       
         HandleTowers();
 
-        if (lastLevel) return;
+        if (finished) return;
         SetWavesToPaths();        
         SetMapDesign();
     }
@@ -73,13 +83,13 @@ public class LevelManager : MonoBehaviour
         currentDesign.GetLevelMap().SetActive(true);
     }
 
-    private bool GetLocalSaveLevel()
+    private bool GetLocalSaveLevel() //returns true if the level was managed to be found, false if all the levels are completed
     {
         level = saveSystem.LoadSave().level;
         if (level > levelConstructions.Length)
         {
             Debug.Log(level + " " + levelConstructions.Length);            
-            FindAnyObjectByType<MenuManager>().ToggleGameCompletionUI();
+            FindAnyObjectByType<MenuManager>().ToggleCanvas("LevelCompletionUI", false);
             return false;
         }
         return true;
@@ -94,12 +104,12 @@ public class LevelManager : MonoBehaviour
         level++;
         if (level <= levelConstructions.Length)
         {
-            FindAnyObjectByType<MenuManager>().ToggleLevelCompletionUI();
+            FindAnyObjectByType<MenuManager>().ToggleCanvas("LevelCompletionUI", false);
             localSaveSystem.SetHasGathered(false);            
         }
         else
         {
-            FindAnyObjectByType<MenuManager>().ToggleGameCompletionUI();
+            FindAnyObjectByType<MenuManager>().ToggleCanvas("GameCompletionUI", false);
         }   
         localSaveSystem.SetMaterialCount(FindAnyObjectByType<BuildMaterialCollection>().GetAllAsMaterialCount());
         localSaveSystem.SetFieldTowerType();
