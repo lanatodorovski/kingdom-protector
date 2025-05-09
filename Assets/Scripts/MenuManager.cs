@@ -44,9 +44,8 @@ public class MenuManager : MonoBehaviour
     //CANVAS FUNCTIONS
     public void ToggleUI()
     {
-        isPaused = !isPaused;
+        setPaused(!isPaused);
         ActiveUI.gameObject.SetActive(isPaused);
-        Time.timeScale = isPaused ? 0f : 1f;
         if (!isPaused) ActiveUI = null;
         if (SceneManager.GetActiveScene().name == "CastleScene") ToggleTowerInteratction();
     }
@@ -93,7 +92,13 @@ public class MenuManager : MonoBehaviour
         }
     }
 
-    //SCENE AND APLICATION FUNCTIONS    
+    //SCENE AND APLICATION FUNCTIONS
+    
+    public void setPaused(bool pause)
+    {
+        isPaused = pause;
+        Time.timeScale = pause? 0f : 1f;
+    }
     public void SaveAndQuit()
     {        
         Application.Quit();
@@ -101,19 +106,19 @@ public class MenuManager : MonoBehaviour
 
     public void NewGame()
     {
-        SceneManager.LoadScene("CastleScene");
-        Time.timeScale = 1f;
+        SceneManager.LoadScene("CastleScene");       
+        setPaused(false);
     }
 
     [ContextMenu("Reset Level")]
     public void RestartLevel()
     {
-        Time.timeScale = 1f;
+        setPaused(false);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
     public void LoadGame()
     {
-        Time.timeScale = 1f;
+        setPaused(false);
         if (FindAnyObjectByType<LocalSaveSystem>().LoadSave().hasGathered)
         {
             SceneManager.LoadScene("CastleScene");
@@ -125,7 +130,7 @@ public class MenuManager : MonoBehaviour
     }
     public void LoadExpeditionScene()
     {
-        Time.timeScale = 1f;
+        setPaused(false);
         SceneManager.LoadScene("ExpeditionScene");
     }
     public void MainMenu()

@@ -35,6 +35,7 @@ public class ExpeditionTimer : MonoBehaviour
         currentTime -= Time.deltaTime;        
         if (currentTime <= 0)
         {
+            
             EndExpedition();
         }
     }
@@ -48,7 +49,7 @@ public class ExpeditionTimer : MonoBehaviour
     public void EndExpedition()
     {
         if (timerText != null) timerText.text = "Time has ended";
-
+        Debug.Log("Timer istekao");
         FindAnyObjectByType<MenuManager>().ToggleCanvas("LevelCompletionUI", false);
         List<MaterialCount> materialCounts = FindAnyObjectByType<BuildMaterialCollection>().GetAllAsMaterialCount();
 
