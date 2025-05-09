@@ -71,10 +71,10 @@ public class LocalSaveSystem : MonoBehaviour
     public void SetFieldTowerType()
     {
         TowerUpgradeControl[] towers = TowerUpgradeControl.towerScripts.ToArray();
-        foreach (TowerUpgradeControl tower in towers)
-        {
-            Debug.Log(tower.GetTowerType());
-        }
+        //foreach (TowerUpgradeControl tower in towers)
+        //{
+        //    Debug.Log(tower.GetTowerType());
+        //}
         if (towers.Length != 0) {
             currentSlotData.fieldTowerType = Array.ConvertAll(towers, tower => tower.GetTowerType()).ToList();
         }

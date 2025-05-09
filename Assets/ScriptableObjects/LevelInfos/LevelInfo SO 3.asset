@@ -15,13 +15,21 @@ MonoBehaviour:
   levelWaves:
   - pathName: Path
     wavesSO:
-    - {fileID: 11400000, guid: 35020240eb422eb48b9853ffd24d1ca7, type: 2}
+    - {fileID: 11400000, guid: 3400be7e589c0394faeea2f4914aa808, type: 2}
+    - {fileID: 11400000, guid: 989a6d6a66510d34bae665ce7b7bbbb3, type: 2}
+    - {fileID: 11400000, guid: 92efa996d72c0da48a047947a8183bea, type: 2}
   - pathName: Path_1
     wavesSO:
-    - {fileID: 11400000, guid: 35020240eb422eb48b9853ffd24d1ca7, type: 2}
+    - {fileID: 11400000, guid: 3400be7e589c0394faeea2f4914aa808, type: 2}
+    - {fileID: 11400000, guid: a61c9e495440a6142a4f82b7d85f39c4, type: 2}
+    - {fileID: 11400000, guid: 92efa996d72c0da48a047947a8183bea, type: 2}
   - pathName: Path_2
     wavesSO:
-    - {fileID: 11400000, guid: 35020240eb422eb48b9853ffd24d1ca7, type: 2}
+    - {fileID: 11400000, guid: a61c9e495440a6142a4f82b7d85f39c4, type: 2}
+    - {fileID: 11400000, guid: 3400be7e589c0394faeea2f4914aa808, type: 2}
+    - {fileID: 11400000, guid: 989a6d6a66510d34bae665ce7b7bbbb3, type: 2}
   - pathName: Path_1_1
     wavesSO:
     - {fileID: 11400000, guid: 35020240eb422eb48b9853ffd24d1ca7, type: 2}
+    - {fileID: 11400000, guid: a61c9e495440a6142a4f82b7d85f39c4, type: 2}
+    - {fileID: 11400000, guid: 989a6d6a66510d34bae665ce7b7bbbb3, type: 2}
