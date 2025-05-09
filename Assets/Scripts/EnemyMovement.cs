@@ -34,7 +34,7 @@ public class EnemyMovement : MonoBehaviour
     private void Move()
     {
         if (Mathf.Sign(pointPosition.x - transform.position.x) != Mathf.Sign( movementDirection.x)
-            && Mathf.Sign(pointPosition.y - transform.position.y) != Mathf.Sign(movementDirection.y) 
+            || Mathf.Sign(pointPosition.y - transform.position.y) != Mathf.Sign(movementDirection.y) 
             || nthPathPoint == 0)
         {
             if (nthPathPoint == path.GetPathPointCount())
