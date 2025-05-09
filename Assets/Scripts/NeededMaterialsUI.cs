@@ -56,7 +56,7 @@ public class NeededMaterialsUI : MonoBehaviour
     }
     public void RemoveCostMaterialsUI()
     {
-        Transform[] children = GetComponentsInChildren<Transform>();
+        Transform?[] children = GetComponentsInChildren<Transform>();        
         for (int i = 0; i < children.Length; i++)
         {
             GameObject childrenGameObject = children[i].gameObject;
