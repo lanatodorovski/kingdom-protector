@@ -71,10 +71,7 @@ public class LocalSaveSystem : MonoBehaviour
     public void SetFieldTowerType()
     {
         TowerUpgradeControl[] towers = TowerUpgradeControl.towerScripts.ToArray();
-        //foreach (TowerUpgradeControl tower in towers)
-        //{
-        //    Debug.Log(tower.GetTowerType());
-        //}
+
         if (towers.Length != 0) {
             currentSlotData.fieldTowerType = Array.ConvertAll(towers, tower => tower.GetTowerType()).ToList();
         }
@@ -85,16 +82,13 @@ public class LocalSaveSystem : MonoBehaviour
     {
         if (currentSlotData.fieldTowerType == null || currentSlotData.fieldTowerType.Count == 0) return;
         for(int i = 0; i < currentSlotData.fieldTowerType.Count(); i++)
-        {
-            //Debug.Log(TowerUpgradeControl.towerScripts.Count);
-            TowerUpgradeControl towerUpgrade = TowerUpgradeControl.towerScripts[i];
-            //Debug.Log(currentSlotData.fieldTowerType[i] + " " + towerUpgrade.GetTowerType());
+        {            
+            TowerUpgradeControl towerUpgrade = TowerUpgradeControl.towerScripts[i];            
             if(towerUpgrade.GetTowerType() != currentSlotData.fieldTowerType[i])
             {
                 towerUpgrade.SetUpgrade(currentSlotData.fieldTowerType[i]);                
             }           
-        }
-        //TowerUpgradeControl.initDone = true;
+        }        
     }
     public SaveSlotData LoadSave(int certainSlotIndex)
     {

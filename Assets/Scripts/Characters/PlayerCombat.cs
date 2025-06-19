@@ -36,7 +36,6 @@ public class PlayerCombat : MonoBehaviour
     }
     public void SetAttack(bool toggle)
     {
-
             isAttacking = toggle;
             attackArea.SetActive(isAttacking);
     }

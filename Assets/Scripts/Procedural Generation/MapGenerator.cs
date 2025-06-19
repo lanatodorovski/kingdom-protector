@@ -118,7 +118,9 @@ public class MapGenerator : MonoBehaviour
                         if (spawnEnvironment && borderX && borderY)
                         {
                             GameObject resource = getResource(regions[i].name);
-                            if (resource != null) Instantiate(resource, (Vector3)startPosition + new Vector3(x + 0.5f, y + 0.5f, 0), Quaternion.identity, resourceRenderer.transform);
+                            if (resource != null) Instantiate(resource, 
+                                (Vector3)startPosition + new Vector3(x + 0.5f, y + 0.5f, 0), 
+                                Quaternion.identity, resourceRenderer.transform);
                         }
                         break;
                     }
