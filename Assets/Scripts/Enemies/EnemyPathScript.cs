@@ -59,7 +59,7 @@ public class EnemyPathScript : MonoBehaviour
             StartCoroutine(StartWave());
 
             yield return new WaitUntil(() => isWaveCompleted());
-
+            
             if (i == waveSO.Length - 1) break;
             yield return new WaitForSeconds(waveStartDelay);
 
